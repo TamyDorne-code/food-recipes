@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cake Recipes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      color: #222;
+      background: url('https://i.ytimg.com/vi/AhDMdKNzPeQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLC0X6Uxni3qnHS3zFWFxnQmLxjTgA') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: rgba(247, 222, 222, 0.95);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px #ffb34744;
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+    }
+    .top-x-btn {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      background: #d84315;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+    .top-x-btn:hover {
+      background: #a8321a;
+    }
+    h1 {
+      color: #702a33;
+      margin-bottom: 24px;
+      font-size: 2.5em;
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    .recipes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-bottom: 24px;
+    }
+    .recipe-card {
+      background: #f2dbf8;
+      border-radius: 12px;
+      box-shadow: 0 1px 8px #ffb34722;
+      padding: 18px;
+      margin-bottom: 0;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .recipe-title {
+      font-size: 1.7em;
+      color: #d84315;
+      margin-bottom: 8px;
+      font-weight: bold;
+      text-align: center;
+      width: 100%;
+    }
+    .recipe-ingredients, .recipe-instructions {
+      margin-bottom: 8px;
+      width: 100%;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: large;
+      color: #ff6f61;
+    }
+    .meal-previews {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    .meal-preview {
+      flex: 1 1 180px;
+      max-width: 22%;
+      min-width: 160px;
+      text-align: center;
+    }
+    .meal-preview img {
+      width: 100%;
+      max-width: 180px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px #ffb34733;
+      margin-bottom: 4px;
+      height: 120px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .meal-preview img:hover {
+      box-shadow: 0 4px 24px #ffb34766;
+    }
+    .meal-caption {
+      font-size: 1.1em;
+      color: #b9797b;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+    .back-btn {
+      display: block;
+      margin: 32px auto 0 auto;
+      background: #ffe082;
+      color: #d84315;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1em;
+      box-shadow: 0 2px 8px #ffb34733;
+      transition: background 0.2s;
+      text-decoration: none;
+      text-align: center;
+      width: fit-content;
+    }
+    .back-btn:hover {
+      background: #ffb347;
+      color: #fff;
+    }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      position: relative;
+      margin: auto;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .modal-img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px #000a;
+      margin-bottom: 12px;
+      background: #fff;
+      padding: 8px;
+    }
+    .modal-caption {
+      color: #fffde7;
+      font-size: 1.1em;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      background: #d84315;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 2;
+    }
+    .close-btn:hover {
+      background: #a8321a;
+    }
+    @media (max-width: 900px) {
+      .meal-previews { flex-direction: column; gap: 10px; }
+      .meal-preview { max-width: 100%; min-width: 0; }
+      .modal-img { max-width: 98vw; max-height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="top-x-btn" onclick="window.location.href='food-recipes.html'">&times;</button>
+    <h1>Cake Recipes</h1>
+        <div><em>Click on the images for a bigger view</em></div>
+    <div class="recipes-list">
+      <div class="recipe-card">
+        <div class="recipe-title">Classic Vanilla Cake</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Flour, sugar, eggs, butter, milk, baking powder, vanilla extract</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Preheat oven to 180°C. Cream butter and sugar, add eggs and vanilla. Mix in flour and baking powder, then milk. Pour into pan and bake for 30-35 minutes.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://i.ytimg.com/vi/qtlhdIfojmc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCa3DItTfpobDch-tzJ53D2z8zWJw" alt="Vanilla Cake" onclick="showModal(this)">
+            <div class="meal-caption">Classic vanilla cake</div>
+          </div>
+         <div class="meal-preview">
+            <img src="https://5.imimg.com/data5/MZ/XC/NF/SELLER-49461693/birthday-vanilla-cake-500x500.jpg" alt="Vanilla Cake" onclick="showModal(this)">
+            <div class="meal-caption">Birthday vanilla cake</div>
+          </div>
+            <div class="meal-preview">
+                <img src="https://hips.hearstapps.com/delish/assets/18/07/1518475314-vanilla-cupcake-horizontal-.jpg" alt="Vanilla Cake" onclick="showModal(this)">
+                <div class="meal-caption">Vanilla cupcake</div>
+            </div>
+            <div class="meal-preview">
+                <img src="https://www.theknot.com/tk-media/images/0589b020-1c0d-11e4-843f-22000aa61a3e~rs_1458.h?quality=60" alt="Vanilla Cake" onclick="showModal(this)">
+                <div class="meal-caption">Vanilla wedding cake</div>
+            </div>
+            </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Chocolate Fudge Cake</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Flour, cocoa powder, sugar, eggs, butter, baking soda, milk, chocolate</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Mix dry ingredients. Cream butter and sugar, add eggs. Combine with dry mix and milk. Stir in melted chocolate. Bake at 175°C for 35 minutes.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://insanelygoodrecipes.com/wp-content/uploads/2024/06/chocolate-fudge-cake-5.jpg" alt="Chocolate Cake" onclick="showModal(this)">
+            <div class="meal-caption">Easy chocolate fudge cake</div>
+          </div>
+        <div class="meal-preview">
+            <img src="https://bakerjo.co.uk/wp-content/uploads/2019/04/IMG_7007-1440x1612.jpg" alt="Chocolate Cake" onclick="showModal(this)">
+            <div class="meal-caption">Chocolate coconut cake</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://bakeomaniac.com/wp-content/uploads/2023/12/Mini-Chocolate-Cupcakes-Recipe.png" alt="Carrot Cake" onclick="showModal(this)">
+            <div class="meal-caption">Chocolate cupcakes</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://i.pinimg.com/736x/1f/ba/3d/1fba3dfd0d37243821c604186fa3c999.jpg" alt="Vanilla Cake" onclick="showModal(this)">
+            <div class="meal-caption">Chocolate fudge wedding cake</div>
+        </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Carrot Cake</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Flour, sugar, eggs, oil, grated carrots, baking powder, cinnamon, walnuts</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Mix flour, baking powder, cinnamon. Beat eggs and sugar, add oil and carrots. Combine with dry mix, add walnuts. Bake at 180°C for 40 minutes.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.glorioustreats.com/wp-content/uploads/2014/05/best-carrot-cake-recipe-square-480x270.jpeg" alt="Carrot Cake" onclick="showModal(this)">
+            <div class="meal-caption">Moist carrot cake</div>
+          </div>
+        <div class="meal-preview">
+            <img src="https://bakerjo.co.uk/wp-content/uploads/2022/08/IMG_3525.jpg" alt="Carrot Cake" onclick="showModal(this)">
+            <div class="meal-caption">Classic carrot cake</div>
+        </div>
+        <div class="meal-preview">
+            <img src="https://uploads-ssl.webflow.com/60d29a2504e6059e9cd03f47/65e738eb5235cc82d2bfce07_2%204x5%20GF%20Carrot%20Cake%20Cupcakes%20Bobs%20Red%20Mill%20%40brightmomentco%20copy.jpg" alt="Carrot Cake" onclick="showModal(this)">
+            <div class="meal-caption">Carrot cupcakes</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://cleobuttera.com/wp-content/uploads/2015/03/slice-out-w-720x540.jpg" alt="Carrot Cake" onclick="showModal(this)">
+            <div class="meal-caption">Carrot cake with cream cheese frosting</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://i.pinimg.com/736x/2b/78/36/2b7836ac3868c0490441b1c2f5d3302a.jpg" alt="Carrot Cake" onclick="showModal(this)">
+            <div class="meal-caption">Carrot wedding cake with wild flowers</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Red Velvet Cake</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Flour, cocoa powder, sugar, eggs, butter, buttermilk, red food coloring, baking soda, vinegar</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Cream butter and sugar, add eggs. Mix in dry ingredients, buttermilk, and coloring. Add baking soda and vinegar. Bake at 175°C for 30 minutes.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://foodland.ca/wp-content/uploads/2021/03/Recipe_Classic_Red_Velvet_Cake.jpg" alt="Red Velvet Cake" onclick="showModal(this)">
+            <div class="meal-caption">Classic red velvet cake</div>
+          </div>
+        <div class="meal-preview">
+            <img src="https://konditor.co.uk/cdn/shop/files/7RedVelvet_191.png?v=1740563199" alt="Red Velvet Cake" onclick="showModal(this)">
+            <div class="meal-caption">Red velvet birthday cake</div>
+            </div>
+            <div class="meal-preview">
+                <img src="https://heatherchristo.com/wp-content/uploads/2014/06/Red-Velvet-Cupcakes-with-Cream-Cheese-Frosting-Gluten-Free-and-Vegan.jpg-.jpg" alt="Red Velvet Cake" onclick="showModal(this)">
+                <div class="meal-caption">Red velvet cupcakes with cream cheese frosting</div>
+            </div>
+            <div class="meal-preview">
+                <img src="https://i.pinimg.com/236x/56/90/39/569039ebb0b024b9dc55797ade102a60.jpg" alt="Red Velvet Cake" onclick="showModal(this)">
+                <div class="meal-caption">Red velvet wedding cake</div>
+                </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Fruit Cake</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Mixed dried fruits, nuts, flour, sugar, eggs, butter, baking powder, spices</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Mix all ingredients and pour into a greased cake tin. Bake at 160°C for 1 hour.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.simplyrecipes.com/thmb/6VpugEyKFRxQ9ajEpG5dPWg5Cv8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2015__12__Fruitcake-LEAD-2-a01c04e1ad954e7c8505beb2778fdd98.jpg" alt="Fruit Cake" onclick="showModal(this)">
+            <div class="meal-caption">Rich fruit cake</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://i.ytimg.com/vi/Qyf9IxsfMys/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAgqixfxJTv3VdUqLj9FQvv4k4vag" alt="Fruit Cake" onclick="showModal(this)">
+            <div class="meal-caption">Fruit cupcakes</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://manningsbakeryshops.ie/wp-content/uploads/2024/06/IMG_7425-1.jpg" alt="Fruit Cake" onclick="showModal(this)">
+            <div class="meal-caption">Birthday fruit cake</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://payava.co.uk/components/com_jshopping/files/img_products/full_IMG_1877.jpeg" alt="Fruit Cake" onclick="showModal(this)">
+            <div class="meal-caption">Fruit wedding cake</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Lemon Drizzle Cake</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Flour, sugar, eggs, butter, lemon zest, lemon juice, baking powder</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Cream butter and sugar, add eggs and lemon zest. Mix in flour and baking powder. Bake at 180°C for 30 minutes. Drizzle with lemon juice and sugar.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://odlums.ie/wp-content/uploads/2016/11/Lemon-Drizzle-Cake.jpg" alt="Lemon Drizzle Cake" onclick="showModal(this)">
+            <div class="meal-caption">Lemon drizzle cake</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/lemon_birthday_cake_53643_16x9.jpg" alt="Lemon Drizzle Cake" onclick="showModal(this)">
+            <div class="meal-caption">Lemon drizzle birthday cake</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/C_lemon-drizzle-cupcakes-REC-1_20240913_UK?wid=2625" alt="Lemon Drizzle Cake" onclick="showModal(this)">
+            <div class="meal-caption">Lemon drizzle cupcakes</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://i.pinimg.com/474x/3b/1a/a5/3b1aa5b70a3a48d778e29b58f5ca8ab3.jpg" alt="Lemon Drizzle Cake" onclick="showModal(this)">
+            <div class="meal-caption">Lemon drizzle wedding cake</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+        <em>Have a favorite cake recipe? Share it in the <a href="recipe-book.html">Recipe Book</a>!</em>
+    </div>
+    <a href="food-recipes.html" class="back-btn">← Back</a>
+  </div>
+  <!-- Modal for full image -->
+  <div id="imgModal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal(event)">&times;</button>
+      <img id="modalImg" class="modal-img" src="" alt="Full Cake">
+      <div id="modalCaption" class="modal-caption"></div>
+    </div>
+  </div>
+  <script>
+    function showModal(img) {
+      var modal = document.getElementById('imgModal');
+      var modalImg = document.getElementById('modalImg');
+      var modalCaption = document.getElementById('modalCaption');
+      modal.style.display = 'flex';
+      modalImg.src = img.src;
+      modalCaption.textContent = img.nextElementSibling ? img.nextElementSibling.textContent : img.alt;
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(event) {
+      if (event.target.classList.contains('close-btn') || event.target.id === 'imgModal') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>

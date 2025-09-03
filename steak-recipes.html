@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Steak & Meat Recipes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      color: #0d0116;
+      font-size:large;
+      background: url('https://img.freepik.com/free-photo/lamb-steak-pieces-with-sauces-grilled-pepper-fresh-salad-wooden-board_140725-10580.jpg?semt=ais_hybrid&w=740') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: rgba(250, 228, 228, 0.363);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px #ffb34744;
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+    }
+    .top-x-btn {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      background: #ff6f61;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+    .top-x-btn:hover {
+      background: #d84315;
+    }
+    h1 {
+      color: #1d0603;
+      margin-bottom: 24px;
+      font-size: 2em;
+    }
+    .recipes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-bottom: 24px;
+    }
+    .recipe-card {
+      background: #ebc1c8bd;
+      border-radius: 12px;
+      box-shadow: 0 1px 8px #ffb34722;
+      padding: 18px;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: left;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .recipe-title {
+      font-size: 1.8em;
+      color: #2e0703f1;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      text-align: center;
+      width: 100%;
+    }
+    .recipe-ingredients, .recipe-instructions {
+      margin-bottom: 8px;
+      width: 100%;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: large;
+      color: #250101;
+    }
+    .meal-previews {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    .meal-preview {
+      flex: 1 1 180px;
+      max-width: 22%;
+      min-width: 160px;
+      text-align: center;
+    }
+    .meal-preview img {
+      width: 100%;
+      max-width: 180px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px #ffb34733;
+      margin-bottom: 4px;
+      height: 120px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .meal-preview img:hover {
+      box-shadow: 0 4px 24px #ffb34766;
+    }
+    .meal-caption {
+      font-size: 1.04em;
+      color: #526885;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+    .back-btn {
+      display: inline-block;
+      margin: 24px auto 0 auto;
+      background: #ffe082;
+      color: #ff6f61;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1em;
+      box-shadow: 0 2px 8px #ffb34733;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .back-btn:hover {
+      background: #ffb347;
+      color: #fff;
+    }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      position: relative;
+      margin: auto;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .modal-img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px #000a;
+      margin-bottom: 12px;
+      background: #fff;
+      padding: 8px;
+    }
+    .modal-caption {
+      color: #fffde7;
+      font-size: 1.1em;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      background: #ff6f61;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 2;
+    }
+    .close-btn:hover {
+      background: #d84315;
+    }
+    @media (max-width: 900px) {
+      .meal-previews { flex-direction: column; gap: 10px; }
+      .meal-preview { max-width: 100%; min-width: 0; }
+      .modal-img { max-width: 98vw; max-height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="top-x-btn" onclick="window.location.href='food-recipes.html'">&times;</button>
+    <h1>Steak & Meat Recipes</h1>
+        <div><em>Click on the images for a bigger view</em></div>
+    <div class="recipes-list">
+      <!-- Beef -->
+      <div class="recipe-card">
+        <div class="recipe-title">Classic Steak</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Steak, salt, pepper, butter, garlic, rosemary</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Season steak, sear in hot pan with butter, garlic, and rosemary. Cook to desired doneness. Rest before serving.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://littlefamilyadventure.com/wp-content/uploads/2021/08/New-York-Strips-in-cast-iron-skillet.jpg" alt="Classic Steak 1" onclick="showModal(this)">
+            <div class="meal-caption">Juicy steak</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.sendiksfinefoods.com/images/rosemary-garlic-ribeye.jpg" alt="Classic Steak 2" onclick="showModal(this)">
+            <div class="meal-caption">Grilled perfection</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.tastingtable.com/img/gallery/the-traditional-italian-marinade-for-quick-tender-steak/intro-1686913154.jpg" onclick="showModal(this)">
+            <div class="meal-caption">Serve with rosemary</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://hips.hearstapps.com/hmg-prod/images/steak-dinner-recipes-67900db443ffd.jpg?crop=0.8888888888888888xw:1xh;center,top&resize=1200:*" alt="Classic Steak 4" onclick="showModal(this)">
+            <div class="meal-caption">Perfect for dinner</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Beef Stew</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Beef chunks, potatoes, carrots, onion, beef broth, tomato paste, herbs</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Brown beef, add vegetables, broth, and tomato paste. Simmer for 2 hours until tender.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.allrecipes.com/thmb/XkapTqFUR4U_fMMZQwgikkuoL-Q=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/RM-281995-ClassicHeartyBeefStew-ddmfs-3x4-6957-660344f4e4c8417fa6d1cf3175e0202c.jpg" alt="Beef Stew 1" onclick="showModal(this)">
+            <div class="meal-caption">Hearty beef stew</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.foodandwine.com/thmb/7tyL6fr0iavZkGHBRBPzATWqnXY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/beef-kare-kare-FT-RECIPE0225-08818464837d461cb33783c66bbf1682.jpeg" onclick="showModal(this)">
+            <div class="meal-caption">Loaded with veggies</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.lanascooking.com/wp-content/uploads/2022/09/garlicky-beef-stew-1200-feature.jpg" alt="Beef Stew 3" onclick="showModal(this)">
+            <div class="meal-caption">Rich and comforting</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://popmenucloud.com/cdn-cgi/image/width=1920,height=1920,format=auto,fit=scale-down/yaohpvul/a0aed676-223a-4b2c-bad7-19f978147fd4.jpg" alt="Beef Stew 4" onclick="showModal(this)">
+            <div class="meal-caption">Serve with bread</div>
+          </div>
+        </div>
+      </div>
+      <!-- Pork -->
+      <div class="recipe-card">
+        <div class="recipe-title">Pork Chops</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Pork chops, salt, pepper, garlic powder, olive oil, rosemary</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Season pork chops, sear in olive oil, add rosemary. Cook until golden and juices run clear.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://cookingfrog.com/wp-content/uploads/2019/02/Garlic-Butter-Juicy-Pork-Chops-Recipe-3.jpg" alt="Pork Chops 1" onclick="showModal(this)">
+            <div class="meal-caption">Juicy pork chops</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.kingsford.com/wp-content/uploads/2023/05/Rosemary-Fennel-amp-Chili-Flake-Rubbed-Bone-in-Pork-Chop-with-Grilled-Apples-and-Potatoes-81b_cc1_00000000_desktop2x.jpg?nocache=1" alt="Pork Chops 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with rosemary</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://images.getrecipekit.com/20240719201116-tomahawk-20pork-20instagram-201.jpg?aspect_ratio=16:9&quality=90&" alt="Pork Chops 3" onclick="showModal(this)">
+            <div class="meal-caption">Perfect for dinner</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://marleyspoon.com/media/recipes/88702/main_photos/large/20_min_honey_garlic_pork_cutlets-883a97cd4da413b6bd96d4d39468454c.jpeg" alt="Pork Chops 4" onclick="showModal(this)">
+            <div class="meal-caption">Add mashed potatoes</div>
+          </div>
+        </div>
+      </div>
+      <!-- Lamb/Mutton -->
+      <div class="recipe-card">
+        <div class="recipe-title">Roast Lamb</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Lamb leg, garlic, rosemary, olive oil, salt, pepper</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Rub lamb with garlic, rosemary, oil, salt, and pepper. Roast at 180°C for 1.5 hours. Rest before slicing.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://recipe30.com/wp-content/uploads/2020/10/Roast-leg-of-lamb-slow-cooked.jpg" alt="Roast Lamb 1" onclick="showModal(this)">
+            <div class="meal-caption">Tender roast lamb</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.southernliving.com/thmb/oF_OIWH6NvExm7DOCqf6czyO6rc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Southern-Living_27322_WT_LegofLamb_20025-3acc9af4045446d089e8ba254ce816a6.jpg" alt="Roast Lamb 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with herbs</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.foodandwine.com/thmb/wZkGqOiuwWFL1Z3YnyhTac76DQk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Crown-Roast-of-Lamb-with-Jeweled-Rice-Stuffing-FT-RECIEP1023-a71a20ef4cb14f1a8c68b02b6aa4ba6f.jpg" alt="Roast Lamb 3" onclick="showModal(this)">
+            <div class="meal-caption">Perfect for holidays</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Roast-lamb-square-FS-0250.jpg" alt="Roast Lamb 4" onclick="showModal(this)">
+            <div class="meal-caption">Add roasted veggies</div>
+          </div>
+        </div>
+      </div>
+      <!-- Mutton -->
+      <div class="recipe-card">
+        <div class="recipe-title">Mutton Curry</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Mutton, yogurt, garlic, ginger, spices, salt</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Marinate mutton in yogurt and spices. Cook with garlic and ginger until tender.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.sipandfeast.com/wp-content/uploads/2021/11/lamb-ragu-recipe-snippet.jpg" alt="Roast Duck 1" onclick="showModal(this)">
+            <div class="meal-caption">Serve with pasta</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://i.ytimg.com/vi/tzlqR2lE4lg/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDy82ZvYG5OIk6dQOWXaT1D1awizA" alt="Roast Duck 2" onclick="showModal(this)">
+            <div class="meal-caption">Citrus sauce adds flavor</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://static.toiimg.com/photo/63201465.cms" alt="Roast Duck 3" onclick="showModal(this)">
+            <div class="meal-caption">How it will look after</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://nicolretailer.com/wp-content/uploads/2025/05/Nicol-Retailer-Limited-Mutton-Curry-Dinner-with-Jeera-Rice-and-Naan-Bread--1024x574.jpeg" alt="Roast Duck 4" onclick="showModal(this)">
+            <div class="meal-caption">Aromatic spices enhance flavor</div>
+          </div>
+        </div>
+      </div>
+      <!-- Venison -->
+      <div class="recipe-card">
+        <div class="recipe-title">Venison Steaks</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Venison steaks, salt, pepper, juniper berries, butter</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Season steaks, sear in butter with crushed juniper berries. Cook to medium-rare.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://meateatingmilitaryman.com/wp-content/uploads/2023/09/smoked-venison-steak-500x375.jpg" alt="Venison Steaks 1" onclick="showModal(this)">
+            <div class="meal-caption">Tender venison steaks</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://lusciousrecipes.com/wp-content/uploads/2025/08/scandinavian-style-venison-tenderloin-with-blueberry.webp" alt="Venison Steaks 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with berries</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.thedailymeal.com/img/gallery/autumn-is-the-best-time-of-year-for-eating-this-underrated-meat/intro-1724366242.jpg" alt="Venison Steaks 3" onclick="showModal(this)">
+            <div class="meal-caption">Perfect for autumn</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://wildgameandfish.com/wp-content/uploads/2023/05/Cast-Iron-Venison-Steak-500x375.jpg" alt="Venison Steaks 4" onclick="showModal(this)">
+            <div class="meal-caption">Add wild mushrooms</div>
+          </div>
+        </div>
+      </div>
+      <!--Rabbit-->
+      <div class="recipe-card">
+        <div class="recipe-title">Braised Rabbit</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Rabbit, onions, carrots, celery, white wine, thyme</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Brown rabbit pieces, sauté vegetables, add wine and thyme. Simmer until tender.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.americanhunter.org/media/ddhfu3qi/201172715351-braisedrabbit_f.jpg?anchor=center&mode=crop&width=987&height=551&rnd=132781871257430000&quality=60" alt="Braised Rabbit 1" onclick="showModal(this)">
+            <div class="meal-caption">Savory braised rabbit</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://media-cdn2.greatbritishchefs.com/media/4a5nnxzt/gbc_htc_beans-8.whqc_768x512q90.jpg" alt="Braised Rabbit 2" onclick="showModal(this)">
+            <div class="meal-caption">Cooked to perfection</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://i0.wp.com/www.rhubarbandlavender.com/wp-content/uploads/2022/07/IMG_1497.jpg?fit=995%2C1024&ssl=1" alt="Braised Rabbit 3" onclick="showModal(this)">
+            <div class="meal-caption">Perfect for dinner</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgzpXyaHdReCpqw57OgglxOLxim3AdaOStrGtZzMUurvuzBunZvK7w3FwKrRw6_OwfqmFnCdTLUSPaLpMjJrywl4yxLfu5wGPEV2dUTMfIv-SMhumsJFRs9lhw8xtqPk4LzswjeyRqX68A/s1600/Hasenpfeffer-27.jpg" alt="Braised Rabbit 4" onclick="showModal(this)">
+            <div class="meal-caption">Serve with mashed potatoes</div>
+          </div>
+      </div>
+      </div>
+      <!-- Goat -->
+      <div class="recipe-card">
+        <div class="recipe-title">Fried Goat</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Goat meat, spices, oil, garlic, onion</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Marinate goat meat with spices, garlic, and onion. Fry until golden brown.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://img-global.cpcdn.com/recipes/ed2e7af158f1a4b0/1200x630cq80/photo.jpg" alt="Roast Turkey 1" onclick="showModal(this)">
+            <div class="meal-caption">How it will look after</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://media.istockphoto.com/id/1281748334/photo/souvlaki-grilled-meat-greek-salad-and-tzatziki-on-wooden-table.jpg?s=612x612&w=0&k=20&c=0Tfb0Jc2DfFQBcNB9KARXS7glgrjYEu838KVxjj0iNo=" alt="Roast Turkey 2" onclick="showModal(this)">
+            <div class="meal-caption">Goat skewers are delish.</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://s3.biznitos.com/curator/suploads/37b17566-4166-4ae0-a867-0a272b440867.jpg" alt="Roast Turkey 3" onclick="showModal(this)">
+            <div class="meal-caption">Serve with rice and fried plantain.</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.thecreativebite.com/wp-content/uploads/2018/11/Airfryer-Honey-Goat-Cheese-Balls-The-Creative-Bite-3-copy.jpg" alt="Roast Turkey 4" onclick="showModal(this)">
+            <div class="meal-caption">Fried goat cheese balls</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <em>Have a favorite steak recipe? Share it in the <a href="recipe-book.html">Recipe Book</a>!</em>
+    </div>
+    <a href="food-recipes.html" class="back-btn">← Back</a>
+  </div>
+  <!-- Modal for full image -->
+  <div id="imgModal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal(event)">&times;</button>
+      <img id="modalImg" class="modal-img" src="" alt="Full Meal">
+      <div id="modalCaption" class="modal-caption"></div>
+    </div>
+  </div>
+  <script>
+    function showModal(img) {
+      var modal = document.getElementById('imgModal');
+      var modalImg = document.getElementById('modalImg');
+      var modalCaption = document.getElementById('modalCaption');
+      modal.style.display = 'flex';
+      modalImg.src = img.src;
+      modalCaption.textContent = img.nextElementSibling ? img.nextElementSibling.textContent : img.alt;
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(event) {
+      if (event.target.classList.contains('close-btn') || event.target.id === 'imgModal') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>

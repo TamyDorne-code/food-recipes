@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fruit Recipes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      color: #222;
+      background: url('https://img.freepik.com/free-photo/assorted-mixed-fruits_74190-6961.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: rgba(240, 211, 243, 0.95);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px #ffb34744;
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+    }
+    .top-x-btn {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      background: #388e3c;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+    .top-x-btn:hover {
+      background: #1b5e20;
+    }
+    h1 {
+      color: #388e3c;
+      margin-bottom: 24px;
+      font-size: 2.1em;
+    }
+    .recipes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-bottom: 24px;
+    }
+    .recipe-card {
+      background: #dfb5b6;
+      border-radius: 12px;
+      box-shadow: 0 1px 8px #388e3c22;
+      padding: 18px;
+      margin-bottom: 0;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .recipe-title {
+      font-size: 1.7em;
+      color: #388e3c;
+      margin-bottom: 8px;
+      font-weight: bold;
+      text-align: center;
+      width: 100%;
+    }
+    .recipe-ingredients, .recipe-instructions {
+      margin-bottom: 8px;
+      width: 100%;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: large;
+      color: #1e6d13;
+    }
+    .meal-previews {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    .meal-preview {
+      flex: 1 1 180px;
+      max-width: 22%;
+      min-width: 160px;
+      text-align: center;
+    }
+    .meal-preview img {
+      width: 100%;
+      max-width: 180px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px #388e3c33;
+      margin-bottom: 4px;
+      height: 120px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .meal-preview img:hover {
+      box-shadow: 0 4px 24px #388e3c66;
+    }
+    .meal-caption {
+      font-size: 1em;
+      color: #526885;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+    .back-btn {
+      display: block;
+      margin: 32px auto 0 auto;
+      background: #c8e6c9;
+      color: #388e3c;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1em;
+      box-shadow: 0 2px 8px #388e3c33;
+      transition: background 0.2s;
+      text-decoration: none;
+      text-align: center;
+      width: fit-content;
+    }
+    .back-btn:hover {
+      background: #388e3c;
+      color: #fff;
+    }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      position: relative;
+      margin: auto;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .modal-img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px #000a;
+      margin-bottom: 12px;
+      background: #fff;
+      padding: 8px;
+    }
+    .modal-caption {
+      color: #e8f5e9;
+      font-size: 1.1em;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      background: #388e3c;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 2;
+    }
+    .close-btn:hover {
+      background: #1b5e20;
+    }
+    @media (max-width: 900px) {
+      .meal-previews { flex-direction: column; gap: 10px; }
+      .meal-preview { max-width: 100%; min-width: 0; }
+      .modal-img { max-width: 98vw; max-height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="top-x-btn" onclick="window.location.href='food-recipes.html'">&times;</button>
+    <h1>Fruit Recipes</h1>       
+    <div><em>Click on the images for a bigger view</em></div>
+    <div class="recipes-list">
+      <div class="recipe-card">
+        <div class="recipe-title">Fruit Salad</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Strawberries, blueberries, kiwi, pineapple, grapes, orange juice</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Chop all fruits into bite-sized pieces. Mix in a bowl and drizzle with orange juice. Chill before serving.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://mycuratedtastes.com/wp-content/uploads/2021/04/EXOTIC-FRUIT-SALAD-WITH-LIME-AND-HONEY-DRESSING-copy-2.jpg" alt="Fruit Salad" onclick="showModal(this)">
+            <div class="meal-caption">Colorful fruit salad</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://kfoods.com/images1/newrecipeicon/creamy-fruit-salad_12972.jpg" alt="Mixed Fruit Bowl" onclick="showModal(this)">
+            <div class="meal-caption">Creamy mixed fruit bowl</div>
+            </div>
+            <div class="meal-preview">
+              <img src="https://img.freepik.com/premium-photo/fresh-fruits-salad-with-ice-cream-bowl-juice-wooden-background_392895-89740.jpg" alt="Mixed Fruit Bowl" onclick="showModal(this)">
+              <div class="meal-caption">Mixed fruit bowl with ice cream</div>
+            </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Berry Parfait</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Mixed berries, granola, yogurt, honey</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Layer berries, granola, and yogurt in a glass. Drizzle with honey. Serve chilled.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://cooklikeagreekblog.com/wp-content/uploads/2020/05/2F1CE6A3-0DD8-4323-AF17-7B69BBD2D057-scaled.jpeg" alt="Berry Parfait" onclick="showModal(this)">
+            <div class="meal-caption">Fresh berry parfait</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://img.freepik.com/premium-photo/fresh-berry-parfait-with-mint_198067-946955.jpg" alt="Berry Parfait" onclick="showModal(this)">
+            <div class="meal-caption">Berry parfait with fresh mint on top</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Grilled Pineapple</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Pineapple slices, brown sugar, cinnamon</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Sprinkle pineapple slices with brown sugar and cinnamon. Grill until caramelized. Serve warm.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://yeyfood.com/wp-content/uploads/2025/06/WEB5brown_sugar_grilled_pineapple_spears._drizzled_wih_f176163f-4461-431a-b3f3-bac36a2ee3c6_3.jpg" alt="Grilled Pineapple" onclick="showModal(this)">
+            <div class="meal-caption">Sweet grilled pineapple</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.chowhound.com/img/gallery/the-genius-way-to-upgrade-your-grilled-pineapple-with-only-2-extra-ingredients/l-intro-1751278042.jpg" alt="Grilled Pineapple" onclick="showModal(this)">
+            <div class="meal-caption">Caramelized grilled pineapple</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Mixed-fruit smoothie</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Mixed fruits (banana, berries, mango), yogurt, honey</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Blend all ingredients until smooth. Serve chilled.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://cdn.veeg.co/app/uploads/2018/05/29123318/Blueberry_Banana_Mango_Smoothie_01_web_landscape.jpg" alt="Mango Smoothie" onclick="showModal(this)">
+            <div class="meal-caption">Refreshing smoothie</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://m.media-amazon.com/images/I/81cIc7gfskL.jpg" alt="Berry Smoothie" onclick="showModal(this)">
+            <div class="meal-caption">Delicious mixed-fruit smoothie</div>
+        </div>
+      </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">100% fruit cake</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Watermelon, berries, oranges, bananas, kiwi and pineapple</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Cut watermelon into a cake-like shape. Add the rest of the fruits on top.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://images.squarespace-cdn.com/content/v1/662fdc3addb09754e97517ec/1717022572483-517EXYCQ7WTJYMY2ALLB/IMG_8381.jpg?format=1500w" alt="Fruit Cake" onclick="showModal(this)">
+            <div class="meal-caption">All fruit cake</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.bfmazzeo.com/mm5/graphics/00000001/2/watermelon%20basket%203_782x960.jpg" alt="Fruit Cake" onclick="showModal(this)">
+            <div class="meal-caption">Watermelon cake</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://rainbowly.com/cdn/shop/products/corporate-gift-mini-watermelon-cake-fruit-cake-with-fresh-fruits-arrangements-vegan-friendly-cake1-week-pre-order-446310_1200x1200.jpg?v=1675586074" alt="Fruit Cake" onclick="showModal(this)">
+            <div class="meal-caption">Mini fruit watermelon cake</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Apple Chips</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Apples, cinnamon, sugar (optional)</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Slice apples thinly, sprinkle with cinnamon and sugar. Bake at 110°C until crisp.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.thecreativebite.com/wp-content/uploads/2020/10/Oven-Baked-Apple-Chips-image.jpg" alt="Apple Chips" onclick="showModal(this)">
+            <div class="meal-caption">Crunchy apple chips</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.savorytooth.com/wp-content/uploads/2024/01/air-fryer-apple-chips-3-500x500.jpg" alt="Apple Chips" onclick="showModal(this)">
+            <div class="meal-caption">Air-fried apple chips</div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <a href="food-recipes.html" class="back-btn">← Back</a>
+  </div>
+  <!-- Modal for full image -->
+  <div id="imgModal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal(event)">&times;</button>
+      <img id="modalImg" class="modal-img" src="" alt="Full Fruit">
+      <div id="modalCaption" class="modal-caption"></div>
+    </div>
+  </div>
+  <script>
+    function showModal(img) {
+      var modal = document.getElementById('imgModal');
+      var modalImg = document.getElementById('modalImg');
+      var modalCaption = document.getElementById('modalCaption');
+      modal.style.display = 'flex';
+      modalImg.src = img.src;
+      modalCaption.textContent = img.nextElementSibling ? img.nextElementSibling.textContent : img.alt;
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(event) {
+      if (event.target.classList.contains('close-btn') || event.target.id === 'imgModal') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>

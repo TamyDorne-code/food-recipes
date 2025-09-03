@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vegetable Recipes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      color: #222;
+      background: url('https://img.delicious.com.au/nvIc70cA/del/2017/06/minestrone-soup-47671-2.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: rgba(237, 241, 236, 0.712);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px #ffb34744;
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+    }
+    .top-x-btn {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      background: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+    .top-x-btn:hover {
+      background: #388e3c;
+    }
+    h1 {
+      color: #044b0c;
+      margin-bottom: 24px;
+      font-size: 2em;
+    }
+    .recipes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-bottom: 24px;
+    }
+    .recipe-card {
+      background: #9ff17980;
+      border-radius: 12px;
+      box-shadow: 0 1px 8px #4caf5033;
+      padding: 18px;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: left;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .recipe-title {
+      font-size: x-large;
+      color: #032e05;
+      margin-bottom: 8px;
+      font-weight: bold;
+      text-align: center;
+      width: 100%;
+    }
+    .recipe-ingredients, .recipe-instructions {
+      margin-bottom: 8px;
+      width: 100%;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: large;    
+      color:#012503;
+    }
+    .meal-previews {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    .meal-preview {
+      flex: 1 1 180px;
+      max-width: 22%;
+      min-width: 160px;
+      text-align: center;
+    }
+    .meal-preview img {
+      width: 100%;
+      max-width: 180px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px #4caf5033;
+      margin-bottom: 4px;
+      height: 120px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .meal-preview img:hover {
+      box-shadow: 0 4px 24px #388e3c66;
+    }
+    .meal-caption {
+      font-size: 1.09em;
+      color: #03234d;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+    .back-btn {
+      display: inline-block;
+      margin: 24px auto 0 auto;
+      background: #39a53d;
+      color: #032905;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1em;
+      box-shadow: 0 2px 8px #4caf5033;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .back-btn:hover {
+      background: #011402;
+      color: #44da30;
+    }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      position: relative;
+      margin: auto;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .modal-img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px #000a;
+      margin-bottom: 12px;
+      background: #fff;
+      padding: 8px;
+    }
+    .modal-caption {
+      color: #fffde7;
+      font-size: 1.1em;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      background: #388e3c;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 2;
+    }
+    .close-btn:hover {
+      background: #1b5e20;
+    }
+    @media (max-width: 900px) {
+      .meal-previews { flex-direction: column; gap: 10px; }
+      .meal-preview { max-width: 100%; min-width: 0; }
+      .modal-img { max-width: 98vw; max-height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="top-x-btn" onclick="window.location.href='food-recipes.html'">&times;</button>
+    <h1>Vegetable Recipes</h1>
+    <div><em>Click on the images for a bigger view</em></div>
+    <div class="recipes-list">
+      <div class="recipe-card">
+        <div class="recipe-title">Roasted Vegetables</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Carrots, potatoes, bell peppers, olive oil, salt, pepper, thyme</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Chop vegetables, toss with olive oil, salt, pepper, and thyme. Roast at 200°C for 30-40 minutes.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.chewoutloud.com/wp-content/uploads/2025/01/roasted-vegetables-square-500x375.jpg" alt="Roasted Vegetables 1" onclick="showModal(this)">
+            <div class="meal-caption">Your meal will look like this after</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://i.ytimg.com/vi/SFX1EfovBCg/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLD87OwERIuXzBzenyMZlMdt-GNcCg" alt="Roasted Vegetables 2" onclick="showModal(this)">
+            <div class="meal-caption">Colorful and healthy</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.marthastewart.com/thmb/minse1fldlov5Q8XUrDnLDw9NYo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/roast-chicken-vegetables-potatoes-3e8b194b-0819_hz-2a7af2430d7a4d0087bb4c7e0d161436.jpg" alt="Roasted Vegetables 3" onclick="showModal(this)">
+            <div class="meal-caption">Perfect side dish</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://tasteisyours.com/wp-content/uploads/2023/12/Roasted-Vegetables-with-Herbs-A-Delightful-Medley-480x270.png" alt="Roasted Vegetables 4" onclick="showModal(this)">
+            <div class="meal-caption">Serve with herbs</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Stuffed Peppers</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Bell peppers, rice, tomato sauce, onion, garlic, cheese</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Cook rice, mix with tomato sauce, onion, and garlic. Stuff into peppers, top with cheese, bake at 180°C for 25 minutes.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.tasteofhome.com/wp-content/uploads/2018/01/Traditional-Stuffed-Peppers_EXPS_TOHcom23_23192_P2_MD_03_02_9b.jpg" alt="Stuffed Peppers 1" onclick="showModal(this)">
+            <div class="meal-caption">Your meal will look like this after</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://healthyfitnessmeals.com/wp-content/uploads/2019/09/Stuffed-peppers-2.jpg" alt="Stuffed Peppers 2" onclick="showModal(this)">
+            <div class="meal-caption">Cheesy and delicious</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.theblackpeppercorn.com/wp-content/uploads/2018/01/Stuffed-Peppers-Beef-and-Rice-angle-wide-hires.jpg" alt="Stuffed Peppers 3" onclick="showModal(this)">
+            <div class="meal-caption">Colorful presentation</div>
+          </div>
+                    <div class="meal-preview">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjm3QIh76F0_w3rQAHqTYVe3xSngU1uYBwuw&s" alt="Stuffed Peppers 4" onclick="showModal(this)">
+            <div class="meal-caption">Skewers</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://mealpractice.b-cdn.net/287698953330364416/mediterranean-stuffed-bell-peppers-with-feta-and-orzo-served-with-a-side-of-greek-salad-cgVPKaRhjA.webp" alt="Stuffed Peppers 5" onclick="showModal(this)">
+            <div class="meal-caption">Serve with salad</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Vegetable Stir Fry</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Broccoli, carrots, bell peppers, snap peas, soy sauce, garlic, ginger, sesame oil</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Sauté garlic and ginger in sesame oil. Add vegetables, stir fry until crisp-tender. Add soy sauce and cook 2 more minutes.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://vegetablerecipes.com/wp-content/uploads/2022/06/Sweet-and-Spicy-Chicken-Vegetable-Stir-Fry-1-1-of-1-500x500.jpg" alt="Vegetable Stir Fry 1" onclick="showModal(this)">
+            <div class="meal-caption">Your meal will look like this after</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://kenhomwoks.com/cdn/shop/articles/9c639f7aa9d31c5b2149d8310cc067ea.jpg?v=1688152741" alt="Vegetable Stir Fry 2" onclick="showModal(this)">
+            <div class="meal-caption">Bright and fresh</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://asimplepalate.com/wp-content/uploads/2019/03/vegetable-stir-fry-14-500x375.jpg" alt="Vegetable Stir Fry 3" onclick="showModal(this)">
+            <div class="meal-caption">Serve with rice</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://cdn.loveandlemons.com/wp-content/uploads/2025/02/stir-fry-recipe-social.jpg" alt="Vegetable Stir Fry 4" onclick="showModal(this)">
+            <div class="meal-caption">Add sesame seeds</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Vegetable Soup</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Carrots, potatoes, celery, onion, tomatoes, green beans, vegetable broth, herbs</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Sauté onion and celery. Add remaining vegetables and broth. Simmer for 30 minutes. Season with herbs.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://monkeyandmekitchenadventures.com/wp-content/uploads/2020/01/Creamy-Vegetable-Soup_09.jpg" alt="Vegetable Soup 1" onclick="showModal(this)">
+            <div class="meal-caption">Your meal will look like this after</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.betterthanbouillon.com/wp-content/uploads/2018/06/Vegetarian-Vegetable-Soup.jpg" alt="Vegetable Soup 2" onclick="showModal(this)">
+            <div class="meal-caption">Warm and comforting</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.bowlofdelicious.com/wp-content/uploads/2025/04/Spring-Lentil-Vegetable-Soup-square.jpg" alt="Vegetable Soup 3" onclick="showModal(this)">
+            <div class="meal-caption">Loaded with veggies</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://i0.wp.com/siamesesourdough.com/wp-content/uploads/2020/08/IMG_8670-e1597341003126.jpeg?fit=720%2C468&ssl=1" alt="Vegetable Soup 4" onclick="showModal(this)">
+            <div class="meal-caption">Serve with bread</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <em>Have a favorite vegetable recipe? Share it in the <a href="recipe-book.html">Recipe Book</a>!</em>
+    </div>
+    <a href="food-recipes.html" class="back-btn">← Back</a>
+  </div>
+  <!-- Modal for full image -->
+  <div id="imgModal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal(event)">&times;</button>
+      <img id="modalImg" class="modal-img" src="" alt="Full Meal">
+      <div id="modalCaption" class="modal-caption"></div>
+    </div>
+  </div>
+  <script>
+    function showModal(img) {
+      var modal = document.getElementById('imgModal');
+      var modalImg = document.getElementById('modalImg');
+      var modalCaption = document.getElementById('modalCaption');
+      modal.style.display = 'flex';
+      modalImg.src = img.src;
+      modalCaption.textContent = img.nextElementSibling ? img.nextElementSibling.textContent : img.alt;
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(event) {
+      // Only close if clicking the X or outside the modal-content
+      if (event.target.classList.contains('close-btn') || event.target.id === 'imgModal') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>

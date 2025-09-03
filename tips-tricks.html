@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tips & Tricks</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #c7b063;
+      margin: 0;
+      color: #222;
+    }
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #b1a15a;
+      border-radius: 24px;
+      box-shadow: 0 8px 32px #ffb34744;
+      padding: 40px 32px 32px 32px;
+      text-align: center;
+      position: relative;
+    }
+    h1 {
+      color: #323b04;
+      margin-bottom: 10px;
+      font-size: 2.3em;
+      font-family: 'Georgia', serif;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 12px #ffb34733;
+    }
+    .subtitle {
+      font-size: 1.15em;
+      color: #354d08;
+      margin-bottom: 28px;
+      font-style: italic;
+    }
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    .category-box {
+      background: #fffde7;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px #ffb34733;
+      width: 96%;
+      max-width: 600px;
+      padding: 32px 24px;
+      text-align: left;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+      position: relative;
+      margin: 0 auto;
+      display: block;
+    }
+    .category-box:hover {
+      box-shadow: 0 6px 24px #ffb34766;
+      transform: translateY(-4px) scale(1.03);
+      background: #ffe082;
+    }
+    .category-title {
+      font-size: 1.35em;
+      color: #768623;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .category-desc {
+      font-size: 1.08em;
+      color: #49500b;
+      margin-bottom: 10px;
+    }
+    ul {
+      text-align: left;
+      margin: 0 0 0 0;
+      max-width: 500px;
+      font-size: 1.08em;
+      color: #526885;
+      padding-left: 18px;
+    }
+    .back-btn {
+      display: block;
+      margin: 32px auto 0 auto;
+      background: #2f3804;
+      color: #c9b372;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1em;
+      box-shadow: 0 2px 8px #ffb34733;
+      transition: background 0.2s;
+      text-decoration: none;
+      text-align: center;
+      width: fit-content;
+    }
+    .back-btn:hover {
+      background: #3b2b14;
+      color: #dbdf16;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="top-x-btn" onclick="window.location.href='index-food.html'" 
+  style="position:fixed;top:18px;right:24px;background:#3b2b14;color:#dbdf16;border:none;border-radius:50%;width:38px;height:38px;font-size:1.8em;font-weight:bold;cursor:pointer;box-shadow:0 2px 8px #0005;display:flex;align-items:center;justify-content:center;transition:background 0.2s;z-index:100;">&times;</button>
+    <h1>Tips & Tricks</h1>
+    <div class="subtitle">
+      Explore kitchen wisdom by category for better cooking!
+    </div>
+  <div class="category-list">
+  <div class="category-box">
+    <span class="category-title">Preparation</span>
+    <div class="category-desc">Get ready for smooth cooking.</div>
+    <a href="tips-preparation.html" style="position:absolute;top:0;left:0;right:0;bottom:0;text-indent:-9999px;">Preparation</a>
+  </div>
+  <div class="category-box">
+    <span class="category-title">Flavor & Seasoning</span>
+    <div class="category-desc">Make your dishes taste amazing.</div>
+    <a href="tips-flavor.html" style="position:absolute;top:0;left:0;right:0;bottom:0;text-indent:-9999px;">Flavor & Seasoning</a>
+  </div>
+  <div class="category-box">
+    <span class="category-title">Cooking Techniques</span>
+    <div class="category-desc">Master the art of cooking.</div>
+    <a href="tips-techniques.html" style="position:absolute;top:0;left:0;right:0;bottom:0;text-indent:-9999px;">Cooking Techniques</a>
+  </div>
+  <div class="category-box">
+    <span class="category-title">Kitchen Safety</span>
+    <div class="category-desc">Stay safe while you cook.</div>
+    <a href="tips-safety.html" style="position:absolute;top:0;left:0;right:0;bottom:0;text-indent:-9999px;">Kitchen Safety</a>
+  </div>
+</div>
+    <a href="index-food.html" class="back-btn">← Back</a>
+  </div>
+</body>
+</html>

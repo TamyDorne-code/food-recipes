@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Plant-based Recipes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      color: #0ffa1b;
+      background: url('https://captainfi.com/wp-content/uploads/2019/09/market-601580_1280-1-1024x683.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: rgba(8, 56, 2, 0.637);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px #ffb34744;
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+    }
+    .top-x-btn {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      background: #388e3c;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+    .top-x-btn:hover {
+      background: #10380a;
+    }
+    h1 { color: #010f01; margin-bottom: 24px; font-size: 2em; }
+    .recipes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-bottom: 24px;
+    }
+    .recipe-card {
+      background: #b5eea7b9;
+      border-radius: 12px;
+      box-shadow: 0 1px 8px #ffb34722;
+      padding: 18px;
+      margin-bottom: 0;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .recipe-title { 
+      font-size: 1.9em; 
+      color: #1f5314; 
+      margin-bottom: 8px; 
+      font-weight: bold; 
+      text-align: center; 
+      width: 100%; 
+    }
+    .recipe-ingredients, .recipe-instructions { 
+      margin-bottom: 8px; 
+      width: 100%; 
+      color:#1f5314; 
+      font-size:large;       
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+    .meal-previews {
+
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    .meal-preview {
+      flex: 1 1 180px;
+      max-width: 22%;
+      min-width: 160px;
+      text-align: center;
+    }
+    .meal-preview img {
+      width: 100%;
+      max-width: 180px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px #ffb34733;
+      margin-bottom: 4px;
+      height: 120px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .meal-preview img:hover {
+      box-shadow: 0 4px 24px #ffb34766;
+    }
+    .meal-caption {
+      font-size: 0.98em;
+      color: #043604;
+      font-family:Arial, Helvetica, sans-serif;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+    .back-btn { display: inline-block; margin: 24px auto 0 auto; background: #10380a; color: #5fc01e; border: none; border-radius: 8px; padding: 10px 22px; font-weight: bold; cursor: pointer; font-size: 1em; box-shadow: 0 2px 8px #ffb34733; transition: background 0.2s; text-decoration: none; }
+    .back-btn:hover { background: #7aca4b; color: #fff; }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      position: relative;
+      margin: auto;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .modal-img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px #000a;
+      margin-bottom: 12px;
+      background: #fff;
+      padding: 8px;
+    }
+    .modal-caption {
+      color: #fffde7;
+      font-size: 1.1em;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      background: #488842;
+      color: #d4d6d4;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 2;
+    }
+    .close-btn:hover {
+      background: #152b02;
+    }
+    @media (max-width: 900px) {
+      .meal-previews { flex-direction: column; gap: 10px; }
+      .meal-preview { max-width: 100%; min-width: 0; }
+      .modal-img { max-width: 98vw; max-height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="top-x-btn" onclick="window.location.href='food-recipes.html'">&times;</button>
+    <h1>Plant-based Recipes</h1>
+        <div><em>Click on the images for a bigger view</em></div>
+    <div class="recipes-list">
+      <div class="recipe-card">
+        <div class="recipe-title">Matooke</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Matooke / plantains, salt, water, tomatoes, onions, green pepper, carrots and parsley.</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Peel and slice the matooke. Boil with a little water and salt until tender. Cut the rest of the ingredients into small pieces and fry them in a different pot. Once they are soft and fragrant, mix them with the matooke and serve.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://healthiersteps.com/wp-content/uploads/2022/04/matoke-overlay.jpg" alt="Matooke" onclick="showModal(this)">
+            <div class="meal-caption">Serve when hot.</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://i.ytimg.com/vi/PmktO-eVWb0/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDvSHmINw8zZ10NsLhMBJvDKEezZw" alt="Matooke" onclick="showModal(this)">
+            <div class="meal-caption">Serve with avocado and greens.</div>
+        </div>
+      </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Greek Salad</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Tomatoes, cucumber, red onion, vegan feta, olives, olive oil, oregano</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Chop vegetables, mix in a bowl. Add vegan feta and olives. Drizzle with olive oil and sprinkle oregano. Toss and serve.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.simplyrecipes.com/thmb/0NrKQlJ691l6L9tZXpL06uOuWis=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-Easy-Greek-Salad-LEAD-2-4601eff771fd4de38f9722e8cafc897a.jpg" alt="Greek Salad" onclick="showModal(this)">
+            <div class="meal-caption">Fresh Greek salad</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.foodiecrush.com/wp-content/uploads/2022/06/Greek-Potato-Salad-foodiecrush.com-13-500x375.jpg" alt="Greek Salad" onclick="showModal(this)">
+            <div class="meal-caption">Add some potatoes</div>
+        </div>
+      </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Chickpea Curry</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Chickpeas, coconut milk, onion, garlic, ginger, curry powder, spinach</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Sauté onion, garlic, and ginger. Add curry powder, chickpeas, and coconut milk. Simmer, add spinach, cook until wilted. Serve with rice.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://poshjournal.com/wp-content/uploads/2022/06/chickpea-curry-recipe-10.jpg" alt="Chickpea Curry" onclick="showModal(this)">
+            <div class="meal-caption">Creamy chickpea curry</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://i0.wp.com/afrovitalityeats.com/wp-content/uploads/2017/07/Spicy-Caribbean-Chickpea-Curry.jpg?resize=1200%2C1200&ssl=1" alt="Chickpea Curry" onclick="showModal(this)">
+            <div class="meal-caption">Serve with rice</div>
+        </div>
+      </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Irish potatoes</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Potatoes, oil, tomatoes, onions, parsley, bell peppers, garlic and desired spices. </div>
+        <div class="recipe-instructions"><b>Instructions:</b> Peel potatoes and cut into halves. In a pan pour a very little amount of oil and add the potatoes. Mix and add the onions, bell peppers, garlic and salt. Stir for a while and add small water. Once the potatoes are cooked, add the grated tomatoes and parsley. Wait for 5-15 minutes and serve.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://i.ytimg.com/vi/iA0p3leVjwY/sddefault.jpg" alt="Stuffed Bell Peppers" onclick="showModal(this)">
+            <div class="meal-caption">Serve when hot</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://img-global.cpcdn.com/recipes/773fa6fdef8bc84b/1200x630cq80/photo.jpg" alt="Stuffed Bell Peppers" onclick="showModal(this)">
+            <div class="meal-caption">Add some spices and scrambled eggs.</div>
+        </div>
+      </div>
+    </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Bean Soup</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Beans, carrots, celery, onion, garlic, vegetable broth, thyme</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Sauté onion, garlic, carrots, and celery. Add beans, broth, and thyme. Simmer until beans are tender. Serve hot.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://iheartvegetables.com/wp-content/uploads/2024/02/Slow-Cooker-White-Bean-Soup-11-of-11.jpg" alt="Lentil Soup" onclick="showModal(this)">
+            <div class="meal-caption">Hearty bean soup</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://simplefreshnyum.com/wp-content/uploads/2020/12/Black-bean-soup-with-baby-greens-featured-image.jpg" alt="Lentil Soup" onclick="showModal(this)">
+            <div class="meal-caption">Good for lunch</div>
+        </div>
+      </div>
+    </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Sweet potatoes</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Sweet potatoes, oil</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Wash the sweet potatoes and cut them into cubes. Toss with oil and seasonings. In a baking dish, arrange the sweet potatoes in a single layer. Bake at 400°F (200°C) for 25-30 minutes or until tender. Serve warm.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDhwGX8S328eVjzRL2pcqDTDEN8M23SbqUDw&s" alt="Vegan Chili" onclick="showModal(this)">
+            <div class="meal-caption">Finish with parsley</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZAQLrSkWeZhAOPJM2nPlj2-g_WwNL_HR2qhGINa_uXMrPwGRYXRiDsOqwZi8zXwOxcdc&usqp=CAU" alt="Vegan Chili" onclick="showModal(this)">
+            <div class="meal-caption">Add some spices</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Spinach</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Spinach, onion, salt and oil.</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Sauté onion and spinach until wilted. Season with salt and drizzle with oil. Serve warm.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://images.food52.com/-s8mvBHswrjDRV6Rn1TgAQZz_GY=/0c965504-326b-4ff2-b0ab-8ac165b08986--2022-1101_lucas-sin_garlic-spinach_3x2_james-ransom-148.jpg" alt="Tofu Stir Fry" onclick="showModal(this)">
+            <div class="meal-caption">They are so tasty</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.unileverfoodsolutions.co.za/dam/global-ufs/mcos/SOUTH-AFRICA/calcmenu/recipes/ZA-recipes/refresh-deli-q2/spinach-onion-and-potatoes-main-header.jpg" alt="Tofu Stir Fry" onclick="showModal(this)">
+            <div class="meal-caption">Add some potatoes</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Vegan Mac & Cheese</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Elbow pasta, cashews, nutritional yeast, garlic, lemon juice, turmeric, almond milk</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Blend cashews, yeast, garlic, lemon, turmeric, and almond milk. Toss with cooked pasta. Serve warm.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://pinchofyum.com/wp-content/uploads/Vegan-Mac-Square.png" alt="Vegan Mac & Cheese" onclick="showModal(this)">
+            <div class="meal-caption">Creamy vegan mac & cheese</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://jackfruitful.com/wp-content/uploads/2023/07/Vegan-spinach-artichoke-Mac-_-cheese-500x500.jpg?crop=1" alt="Vegan Mac & Cheese" onclick="showModal(this)">
+            <div class="meal-caption">Add some spinach</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <em>Have a favorite plant-based recipe? Share it in the <a href="recipe-book.html">Recipe Book</a>!</em>
+    </div>
+    <a href="food-recipes.html" class="back-btn">← Back</a>
+  </div>
+  <!-- Modal for full image -->
+  <div id="imgModal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal(event)">&times;</button>
+      <img id="modalImg" class="modal-img" src="" alt="Full Meal">
+      <div id="modalCaption" class="modal-caption"></div>
+    </div>
+  </div>
+  <script>
+    function showModal(img) {
+      var modal = document.getElementById('imgModal');
+      var modalImg = document.getElementById('modalImg');
+      var modalCaption = document.getElementById('modalCaption');
+      modal.style.display = 'flex';
+      modalImg.src = img.src;
+      modalCaption.textContent = img.nextElementSibling ? img.nextElementSibling.textContent : img.alt;
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(event) {
+      if (event.target.classList.contains('close-btn') || event.target.id === 'imgModal') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>

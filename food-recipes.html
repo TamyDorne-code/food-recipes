@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Food & Recipes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      color: #222;
+      background: url('https://www.healthaid.co.uk/cdn/shop/articles/Most_Healthy_Food_Choices_for_Daily_Consumption.jpg?v=1640121333') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: rgba(68, 53, 21, 0.95);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px #ffb34744;
+      padding: 32px 24px;
+      text-align: center;
+      position: relative; /* Added for X button positioning */
+    }
+    .top-x-btn {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      background: #413c02;
+      color: #f8b90c;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+    .top-x-btn:hover {
+      background: #463507;
+    }
+    h1 {
+      color: #e7ba58;
+      margin-bottom: 24px;
+      font-size: 2em;
+      font-family: 'Georgia', serif;
+    }
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    .category-box {
+      background: #725932;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px #2b1a0233;
+      width: 96%;
+      max-width: 600px;
+      padding: 32px 24px;
+      text-align: left;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+      position: relative;
+      margin: 0 auto;
+      display: block;
+    }
+    .category-box:hover {
+      box-shadow: 0 6px 24px #160e0266;
+      transform: translateY(-4px) scale(1.03);
+      background: #926830;
+    }
+    .category-title {
+      font-size: 1.35em;
+      color: #cc9e1f;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .category-desc {
+      font-family: 'Georgia', serif;
+      font-size: 1.2em;
+      color: #19330a;
+      margin-bottom: 10px;
+    }
+    .category-link {
+      display: block;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      text-indent: -9999px;
+      z-index: 2;
+    }
+    .back-btn {
+      display: block;
+      margin: 32px auto 0 auto;
+      background: #ffe082;
+      color: #464428;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1em;
+      box-shadow: 0 2px 8px #ffb34733;
+      transition: background 0.2s;
+      text-decoration: none;
+      text-align: center;
+      width: fit-content;
+    }
+    .back-btn:hover {
+      background: #ffb347;
+      color: #fff;
+    }
+    h2 {
+      color: #c9a574;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin-bottom: 16px;
+      font-size: 1.9em;
+    }
+    h3 {
+      color: #9abbe6;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin-bottom: 32px;
+      font-size: 1.3em;
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+        <button class="top-x-btn" onclick="window.location.href='index-food.html'" 
+  style="position:fixed;top:18px;right:24px;background:#302003;color:#f5aa0a;border:none;border-radius:50%;width:38px;height:38px;font-size:1.8em;font-weight:bold;cursor:pointer;box-shadow:0 2px 8px #0005;display:flex;align-items:center;justify-content:center;transition:background 0.2s;z-index:100;">&times;</button>  
+    <h1>Food & Recipes</h1>
+    <h3>Explore a variety of delicious recipes through our <em>categories</em>.</h3>
+    <h2>Food Sections</h2>
+    <div class="category-list">
+      <div class="category-box">
+        <span class="category-title">Seafood</span>
+        <div class="category-desc">Delicious recipes with fish, shrimp, and more from the sea.</div>
+        <a href="seafood-recipes.html" class="category-link">Seafood</a>
+      </div>
+      <div class="category-box">
+        <span class="category-title">Vegetables</span>
+        <div class="category-desc">Healthy and tasty vegetable-based dishes for every meal.</div>
+        <a href="vegetable-recipes.html" class="category-link">Vegetables</a>
+      </div>
+      <div class="category-box">
+        <span class="category-title">Steak & Beef</span>
+        <div class="category-desc">Juicy steak and beef recipes for meat lovers.</div>
+        <a href="steak-recipes.html" class="category-link">Steak & Beef</a>
+      </div>
+      <div class="category-box">
+        <span class="category-title">Poultry</span>
+        <div class="category-desc">Chicken, turkey, and other poultry favorites.</div>
+        <a href="poultry-recipes.html" class="category-link">Poultry</a>
+      </div>
+      <div class="category-box">
+        <span class="category-title">Plant-based</span>
+        <div class="category-desc">Plant-based recipes for a healthier lifestyle.</div>
+        <a href="plant-based-recipes.html" class="category-link">Plant-based</a>
+      </div>
+      <div class="category-box">
+        <span class="category-title">Sweet</span>
+        <div class="category-desc">Doughnuts, cookies, and other sweet treats.</div>
+        <a href="sweet-recipes.html" class="category-link">Sweet</a>
+      </div>
+      <div class="category-box">
+        <span class="category-title">Snacks</span>
+        <div class="category-desc">Chips, dips, and other savory snacks.</div>
+        <a href="snack-recipes.html" class="category-link">Snacks</a>
+      </div>
+  <div class="category-box">
+    <span class="category-title">Cakes</span>
+    <div class="category-desc">Delicious cakes for every occasion.</div>
+    <a href="cake-recipes.html" class="category-link">Cakes</a>
+  </div>
+  <div class="category-box">
+    <span class="category-title">Jelly</span>
+    <div class="category-desc">Indulge in our sweet and fruity jelly recipes.</div>
+    <a href="jelly-recipes.html" class="category-link">Jelly</a>
+  </div>
+  <div class="category-box">
+    <span class="category-title">Fruits</span>
+    <div class="category-desc">Fresh and delicious fruit recipes for all seasons.</div>
+    <a href="fruit-recipes.html" class="category-link">Fruits</a>
+  </div>
+</div>
+</div>
+    <a href="index-food.html" class="back-btn">← Back</a>
+  </div>
+  <script>
+  // Save last clicked category
+  document.querySelectorAll('.category-link').forEach(function(link) {
+    link.addEventListener('click', function() {
+      localStorage.setItem('lastCategory', link.getAttribute('href'));
+    });
+  });
+
+  // On page load, scroll to last category
+  window.addEventListener('DOMContentLoaded', function() {
+    var lastCategory = localStorage.getItem('lastCategory');
+    if (lastCategory) {
+      var targetBox = Array.from(document.querySelectorAll('.category-link'))
+        .find(link => link.getAttribute('href') === lastCategory);
+      if (targetBox) {
+        targetBox.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  });
+</script>
+</body>
+</html>

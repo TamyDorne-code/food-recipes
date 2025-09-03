@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Chef's Favourite</title>
+  <style>
+    body {
+      font-family: 'Georgia', 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #e8f5e9 0%, #a5d6a7 100%);
+      margin: 0;
+      color: #222;
+    }
+    .container {
+      max-width: 740px;
+      margin: 48px auto;
+      background: #f7fff7;
+      border-radius: 36px;
+      box-shadow: 0 12px 40px #a5d6a7aa, 0 1.5px 0 #fffde7 inset;
+      padding: 64px 44px 48px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .container::before {
+      content: "";
+      position: absolute;
+      top: -60px; left: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, #a5d6a7 60%, #388e3c 100%);
+      opacity: 0.18;
+      border-radius: 50%;
+      z-index: 0;
+    }
+    .container::after {
+      content: "";
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, #388e3c 60%, #e8f5e9 100%);
+      opacity: 0.13;
+      border-radius: 50%;
+      z-index: 0;
+    }
+    h1 {
+      color: #388e3c;
+      margin-bottom: 18px;
+      font-size: 2.7em;
+      font-family: 'Georgia', serif;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 12px #a5d6a744;
+      position: relative;
+      z-index: 1;
+    }
+    .divider {
+      width: 90px;
+      height: 7px;
+      background: linear-gradient(90deg,#a5d6a7,#388e3c);
+      border-radius: 3px;
+      margin: 18px auto 32px auto;
+      opacity: 0.8;
+      position: relative;
+      z-index: 1;
+    }
+    .about-text {
+      font-size: 1.18em;
+      color: #388e3c;
+      margin-bottom: 36px;
+      text-align: left;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+      background: linear-gradient(90deg,#e8f5e9 80%, #c8e6c9 100%);
+      border-radius: 22px;
+      box-shadow: 0 2px 12px #a5d6a744;
+      padding: 32px 26px;
+      position: relative;
+      z-index: 1;
+      border: 2px solid #a5d6a7;
+    }
+    .about-text b {
+      color: #1e6d13;
+    }
+    .info-note {
+      background: #f1f8e9;
+      color: #388e3c;
+      font-size: 1.09em;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      box-shadow: 0 1px 8px #a5d6a744;
+      border-left: 6px solid #388e3c;
+      text-align: left;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 1;
+      font-style: italic;
+    }
+    .features-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 32px;
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .feature-card {
+      background: linear-gradient(120deg,#e8f5e9 80%, #c8e6c9 100%);
+      border-radius: 18px;
+      box-shadow: 0 2px 12px #a5d6a744;
+      padding: 22px 18px;
+      min-width: 220px;
+      max-width: 260px;
+      text-align: left;
+      border: 2px solid #a5d6a7;
+      position: relative;
+      transition: box-shadow 0.2s, transform 0.2s;
+      font-size: 1.08em;
+    }
+    .feature-card:hover {
+      box-shadow: 0 8px 32px #388e3c44;
+      transform: scale(1.04);
+      background: linear-gradient(120deg,#c8e6c9 80%, #e8f5e9 100%);
+    }
+    .feature-title {
+      color: #388e3c;
+      font-weight: bold;
+      font-size: 1.13em;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .feature-icon {
+      font-size: 1.6em;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .back-btn {
+      display: block;
+      margin: 44px auto 0 auto;
+      background: #a5d6a7;
+      color: #388e3c;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 32px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1.12em;
+      box-shadow: 0 2px 8px #a5d6a744;
+      transition: background 0.2s, transform 0.2s;
+      text-decoration: none;
+      text-align: center;
+      width: fit-content;
+      position: relative;
+      z-index: 1;
+    }
+    .back-btn:hover {
+      background: #388e3c;
+      color: #fff;
+      transform: scale(1.05);
+    }
+    @media (max-width: 900px) {
+      .container { max-width: 98vw; padding: 12vw 2vw 8vw 2vw;}
+      .about-text, .info-note { padding: 18px 4vw; }
+      .features-list { flex-direction: column; gap: 18px; }
+      .feature-card { max-width: 98vw; min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>About Chef's Favourite</h1>
+    <div class="divider"></div>
+    <div class="about-text">
+      <b>Chef's Favourite</b> is a private recipe platform designed for home cooks and food lovers.<br><br>
+      Here, you can discover new dishes, save your own creations, and explore helpful kitchen wisdom—all in your own personal space.<br><br>
+      Every feature is made for your convenience: add recipes, organize tips, and build your own digital cookbook. Your experience is unique and tailored just for you.<br><br>
+      Want to keep track of your favorite recipes or kitchen tricks? Visit the <b>Recipe Book</b> or <b>Tips & Tricks</b> page and start building your private collection!
+    </div>
+    <div class="features-list">
+      <div class="feature-card">
+        <span class="feature-icon">&#x1F372;</span>
+        <span class="feature-title">Personal Recipe Book</span>
+        <div>Save, edit, and organize your favorite recipes. Your collection is private and only visible to you.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">&#x1F9C0;</span>
+        <span class="feature-title">Tips & Tricks</span>
+        <div>Access categorized kitchen wisdom and add your own tips for easy reference.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">&#x1F4DD;</span>
+        <span class="feature-title">Smart Search</span>
+        <div>Quickly find recipes or tips by title, ingredient, or category using the built-in search bar in the recipe book.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">&#x1F4BE;</span>
+        <span class="feature-title">Private Storage</span>
+        <div>Your recipes and tips are saved only in your browser. No one else can view or edit your collection.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">&#x2728;</span>
+        <span class="feature-title">Updates</span>
+        <div>Stay tuned for new features and improvements for our users! Updates are coming soon.</div>
+      </div>
+    <div class="feature-card">
+      <span class="feature-icon">&#x1F4A1;</span>
+      <span class="feature-title">Why Private?</span>
+      <div>Privacy is our top priority. Your recipes and tips are saved only in your browser and are not shared with anyone else for security reasons.</div>
+    </div>
+    </div>
+    <a href="index-food.html" class="back-btn">← Back</a>
+  </div>
+</body>
+</html>

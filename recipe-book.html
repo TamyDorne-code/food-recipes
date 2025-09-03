@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recipe Book</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #e8f5e9 0%, #bbecbd 100%);
+      margin: 0;
+      color: #222;
+    }
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      border: 3px solid #a5d6a7;
+      background: linear-gradient(135deg, #e8f5e9 0%, #fffde7 100%);
+      border-radius: 32px;
+      box-shadow: 0 12px 40px #a5d6a7aa, 0 1.5px 0 #fffde7 inset;
+      padding: 60px 32px 40px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .container::before {
+      content: "";
+      position: absolute;
+      top: -60px; left: -60px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, #ffe082 60%, #ffb347 100%);
+      opacity: 0.25;
+      border-radius: 50%;
+      z-index: 0;
+    }
+    .container::after {
+      content: "";
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, #ffb347 60%, #ff6f61 100%);
+      opacity: 0.18;
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .search-bar {
+      margin-bottom: 22px;
+      color: #388e3c;
+      font-size: 1.08em;
+      background: linear-gradient(90deg, #e8f5e9 70%, #ffe082 100%);
+      border-radius: 12px;
+      padding: 14px 0;
+      box-shadow: 0 1px 8px #a5d6a744;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+   }
+
+    .search-bar b {
+     color: #388e3c;
+     margin-bottom: 8px;
+     font-size: 1.08em;
+     letter-spacing: 0.5px;
+   }
+
+    #searchBox {
+     width: 70%;
+     max-width: 340px;
+     padding: 10px 14px;
+     border-radius: 8px;
+     border: 2px solid #a5d6a7;
+     font-size: 1.08em;
+     background: #fff;
+     color: #388e3c;
+     box-shadow: 0 1px 6px #a5d6a744;
+     transition: border 0.2s, box-shadow 0.2s;
+     margin-top: 4px;
+   }
+
+    #searchBox:focus {
+     border: 2px solid #388e3c;
+     box-shadow: 0 2px 12px #a5d6a744;
+     outline: none;
+     background: #e8f5e9;
+   }
+    .top-x-btn {
+      position: fixed;
+      top: 18px;
+      right: 24px;
+      background: #ff6f61;
+      color: #fff;
+      border: 2px solid #d84315;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 100;
+    }
+    .top-x-btn:hover {
+      background: #d84315;
+    }
+    h1 {
+      color: #47420c;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.6em;
+      font-family: 'Georgia', serif;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 12px #ffb34733;
+      position: relative;
+      z-index: 1;
+    }
+    .subtitle {
+      font-size: 1.18em;
+      color: #526885;
+      margin-bottom: 32px;
+      font-style: italic;
+      position: relative;
+      z-index: 1;
+    }
+    form {
+      margin-bottom: 32px;
+      background: linear-gradient(120deg,#fffbe6 70%, #e8f5e9 100%);
+      padding: 28px 18px 18px 18px;
+      border-radius: 22px;
+      box-shadow: 0 2px 12px #bbecbd;
+      position: relative;
+      border: 2px dashed #bbecbd;
+      z-index: 1;
+      animation: fadeIn 0.8s;
+    }
+    form::before {
+      content: "Add a New Recipe";
+      position: absolute;
+      top: -18px;
+      left: 18px;
+      background: #a5d6a7;
+      color: #388e3c;
+      font-size: 1.08em;
+      font-weight: bold;
+      padding: 4px 14px;
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 2px 8px #a5d6a744;
+      letter-spacing: 1px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 18px 0;
+      border-radius: 10px;
+      border: 1.5px solid #bbecbd;
+      font-size: 1.08em;
+      background: #f7fff7;
+      color: #388e3c;
+      box-shadow: 0 1px 6px #ffb34711;
+      transition: border 0.2s;
+    }
+    input:focus, textarea:focus {
+      border: 2px solid #388e3c;
+      outline: none;
+      background: #e8f5e9;
+    }
+button[type="submit"] {
+  background: linear-gradient(90deg,#a5d6a7,#388e3c);
+  color: #fff;
+  box-shadow: 0 2px 8px #a5d6a744;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-weight: bold;
+  font-size: 1.08em;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+button[type="submit"]:hover {
+  background: linear-gradient(90deg,#388e3c,#a5d6a7);
+  box-shadow: 0 4px 16px #388e3c44;
+  transform: scale(1.05);
+}
+    .tip {
+      margin-bottom: 18px;
+      color: #d84315;
+      font-size: 1.08em;
+      background: #fffbe6;
+      border-radius: 8px;
+      padding: 8px 0;
+      box-shadow: 0 1px 6px #ffb34711;
+      z-index: 1;
+      position: relative;
+    }
+    .added-heading {
+      font-size: 1.18em;
+      color: #ff6f61;
+      font-weight: bold;
+      margin-bottom: 14px;
+      text-align: left;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 1;
+    }
+    .recipe-list {
+      margin-top: 18px;
+      text-align: left;
+      position: relative;
+      z-index: 1;
+    }
+    .recipe-card {
+      background: linear-gradient(90deg,#fffde7 80%, #ffe082 100%);
+      border-radius: 18px;
+      box-shadow: 0 2px 12px #ffb34722;
+      padding: 28px 18px 20px 18px;
+      margin-bottom: 28px;
+      position: relative;
+      border: 1.5px solid #ffb34744;
+      transition: box-shadow 0.2s, transform 0.2s;
+      animation: fadeIn 0.7s;
+      overflow: hidden;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .recipe-card:hover {
+      box-shadow: 0 8px 32px #ffb34766;
+      transform: scale(1.02);
+      background: linear-gradient(90deg,#ffe082 80%, #fffde7 100%);
+    }
+    .recipe-title {
+      font-size: 1.35em;
+      color: #ff6f61;
+      margin-bottom: 10px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-shadow: 0 1px 6px #ffb34722;
+      font-family: 'Georgia', serif;
+    }
+    .recipe-ingredients, .recipe-instructions {
+      margin-bottom: 10px;
+      font-size: 1.08em;
+      line-height: 1.5;
+    }
+    .recipe-ingredients b, .recipe-instructions b {
+      color: #d84315;
+    }
+    .recipe-category {
+      color: #ffb347;
+      font-size: 1.05em;
+      margin-bottom: 4px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    .recipe-author {
+      color: #526885;
+      font-size: 1em;
+      margin-bottom: 4px;
+      font-style: italic;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: #ff6f61;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 1px 6px #ffb34722;
+      transition: background 0.2s, transform 0.2s;
+      z-index: 2;
+    }
+    .delete-btn:hover {
+      background: #b71c1c;
+      transform: scale(1.08);
+    }
+    .back-btn {
+      display: block;
+      margin: 40px auto 0 auto;
+      background: #ffe082;
+      color: #ff6f61;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 28px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1.08em;
+      box-shadow: 0 2px 8px #ffb34733;
+      transition: background 0.2s, transform 0.2s;
+      text-decoration: none;
+      text-align: center;
+      width: fit-content;
+      position: relative;
+      z-index: 1;
+    }
+    .back-btn:hover {
+      background: #ffb347;
+      color: #fff;
+      transform: scale(1.05);
+    }
+    /* Decorative divider */
+    .divider {
+      width: 80px;
+      height: 6px;
+      background: linear-gradient(90deg,#a5d6a7,#388e3c);
+      border-radius: 3px;
+      margin: 24px auto 32px auto;
+      opacity: 0.8;
+      position: relative;
+      z-index: 1;
+    }
+    @media (max-width: 700px) {
+      .container { max-width: 98vw; padding: 18vw 2vw 8vw 2vw;}
+      form { padding: 18px 4vw 18px 4vw;}
+      .top-x-btn { right: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="top-x-btn" onclick="window.location.href='index-food.html'">&times;</button>
+    <h1>Recipe Book</h1>
+    <div class="subtitle">
+      Add your favorite recipes, search, and manage them all in one place!
+    </div>
+    <div class="divider"></div>
+    <form id="recipeForm">
+      <input type="text" id="title" placeholder="Recipe Title" required>
+      <textarea id="ingredients" rows="3" placeholder="Ingredients (comma separated)" required></textarea>
+      <textarea id="instructions" rows="4" placeholder="Instructions" required></textarea>
+      <input type="text" id="category" placeholder="Category (e.g. Cake, Snack, Fruit)" required>
+      <input type="text" id="author" placeholder="Your Name (optional)">
+      <button type="submit">Add Recipe</button>
+    </form>
+    <div class="tip">
+      <b>Tip:</b> You can add your favorite recipes, categorize them, and share your name!
+    </div>
+    <div class="search-bar">
+  <b>If you've added recipes and they aren't showing up or too many, you can search for them here:</b>
+  <input type="text" id="searchBox" placeholder="Search by title, ingredient, or category">
+</div>
+    <div class="added-heading">Added Recipes</div>
+    <div class="recipe-list" id="recipeList"></div>
+    <a href="index-food.html" class="back-btn">← Back</a>
+  </div>
+<script>
+  // Load recipes from localStorage
+  function loadRecipes() {
+    return JSON.parse(localStorage.getItem('recipes') || '[]');
+  }
+  // Save recipes to localStorage
+  function saveRecipes(recipes) {
+    localStorage.setItem('recipes', JSON.stringify(recipes));
+  }
+  // Render all recipes (with optional filter)
+  function renderRecipes(filter = '') {
+    const recipeList = document.getElementById('recipeList');
+    const recipes = loadRecipes();
+    recipeList.innerHTML = '';
+    recipes.forEach((recipe, idx) => {
+      const searchText = (recipe.title + recipe.ingredients + recipe.instructions + (recipe.category||'')).toLowerCase();
+      if (!filter || searchText.includes(filter.toLowerCase())) {
+        const card = document.createElement('div');
+        card.className = 'recipe-card';
+        card.innerHTML = `
+          <div class="recipe-title">${recipe.title}</div>
+          <div class="recipe-ingredients"><b>Ingredients:</b> ${recipe.ingredients}</div>
+          <div class="recipe-instructions"><b>Instructions:</b> ${recipe.instructions}</div>
+          ${recipe.category ? `<div class="recipe-category"><b>Category:</b> ${recipe.category}</div>` : ''}
+          ${recipe.author ? `<div class="recipe-author"><b>By:</b> ${recipe.author}</div>` : ''}
+          <button class="delete-btn" data-idx="${idx}" title="Delete this recipe">Delete</button>
+        `;
+        recipeList.appendChild(card);
+      }
+    });
+    // Add delete functionality
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.onclick = function() {
+        const idx = parseInt(this.getAttribute('data-idx'));
+        const recipes = loadRecipes();
+        recipes.splice(idx, 1);
+        saveRecipes(recipes);
+        renderRecipes(document.getElementById('searchBox').value);
+      };
+    });
+  }
+  // Handle form submit
+  document.getElementById('recipeForm').onsubmit = function(e) {
+    e.preventDefault();
+    const title = document.getElementById('title').value.trim();
+    const ingredients = document.getElementById('ingredients').value.trim();
+    const instructions = document.getElementById('instructions').value.trim();
+    const category = document.getElementById('category').value.trim();
+    const author = document.getElementById('author').value.trim();
+    if (title && ingredients && instructions && category) {
+      const recipes = loadRecipes();
+      recipes.push({ title, ingredients, instructions, category, author });
+      saveRecipes(recipes);
+      renderRecipes(document.getElementById('searchBox').value);
+      this.reset();
+    }
+  };
+  // Search functionality
+  document.getElementById('searchBox').oninput = function() {
+    renderRecipes(this.value);
+  };
+  // Initial render
+  renderRecipes();
+</script>
+</body>
+</html>

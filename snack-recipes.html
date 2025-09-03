@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Snack Recipes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      color: #222;
+      background: url('https://media.potatopro.com/a-lot-of-snacks-2400.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: rgba(204, 224, 191, 0.95);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px #ffb34744;
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+    }
+    .top-x-btn {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      background: #ffb347;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+    .top-x-btn:hover {
+      background: #d84315;
+    }
+    h1 {
+      color: #ffb347;
+      margin-bottom: 24px;
+      font-size: 2em;
+    }
+    .recipes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-bottom: 24px;
+    }
+    .recipe-card {
+      background: #d6e4f0;
+      border-radius: 12px;
+      box-shadow: 0 1px 8px #ffb34722;
+      padding: 18px;
+      margin-bottom: 0;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .recipe-title {
+      font-size: 1.8em;
+      color: #d84315;
+      margin-bottom: 8px;
+      font-weight: bold;
+      text-align: center;
+      width: 100%;
+    }
+    .recipe-ingredients, .recipe-instructions {
+      margin-bottom: 8px;
+      width: 100%;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: large;
+      color: #44db49;
+    }
+    .meal-previews {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    .meal-preview {
+      flex: 1 1 180px;
+      max-width: 22%;
+      min-width: 160px;
+      text-align: center;
+    }
+    .meal-preview img {
+      width: 100%;
+      max-width: 180px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px #ffb34733;
+      margin-bottom: 4px;
+      height: 120px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .meal-preview img:hover {
+      box-shadow: 0 4px 24px #ffb34766;
+    }
+    .meal-caption {
+      font-size: 1.2em;
+      color: #388e3c;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+    .back-btn {
+      display: block;
+      margin: 32px auto 0 auto;
+      background: #ffe082;
+      color: #ffb347;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1em;
+      box-shadow: 0 2px 8px #ffb34733;
+      transition: background 0.2s;
+      text-decoration: none;
+      text-align: center;
+      width: fit-content;
+    }
+    .back-btn:hover {
+      background: #ffb347;
+      color: #fff;
+    }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      position: relative;
+      margin: auto;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .modal-img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px #000a;
+      margin-bottom: 12px;
+      background: #fff;
+      padding: 8px;
+    }
+    .modal-caption {
+      color: #fffde7;
+      font-size: 1.1em;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      background: #ffb347;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 2;
+    }
+    .close-btn:hover {
+      background: #d84315;
+    }
+    @media (max-width: 900px) {
+      .meal-previews { flex-direction: column; gap: 10px; }
+      .meal-preview { max-width: 100%; min-width: 0; }
+      .modal-img { max-width: 98vw; max-height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="top-x-btn" onclick="window.location.href='food-recipes.html'">&times;</button>
+    <h1>Snack Recipes</h1>
+        <div><em>Click on the images for a bigger view</em></div>
+    <div class="recipes-list">
+      <div class="recipe-card">
+        <div class="recipe-title">Classic Nachos</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Tortilla chips, cheddar cheese, jalapeños, salsa, sour cream</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Layer chips and cheese, bake at 180°C until cheese melts. Top with jalapeños, salsa, and sour cream.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://media.post.rvohealth.io/wp-content/uploads/sites/2/2021/09/RT9.png" alt="Nachos" onclick="showModal(this)">
+            <div class="meal-caption">Cheesy nachos</div>
+          </div>
+            <div class="meal-preview">
+                <img src="https://i0.wp.com/taylahskitchen.com/wp-content/uploads/2021/01/nachos-1.jpg?resize=768%2C512&ssl=1" alt="Loaded Nachos" onclick="showModal(this)">
+                <div class="meal-caption">Loaded nachos with toppings</div>
+            </div>
+            <div class="meal-preview">
+                <img src="https://dmlxzvnzyohme.cloudfront.net/2013/12/_768xAUTO_crop_center-center_none_ns/Jazzy-Vegetarian-Tortilla-Chips.jpg" alt="Nachos" onclick="showModal(this)">
+                <div class="meal-caption">Plain nachos</div>
+            </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Guacamole Dip</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Avocado, lime, tomato, onion, cilantro, salt</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Mash avocado, mix in lime, tomato, onion, cilantro, and salt. Serve with chips.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://i0.wp.com/wonkywonderful.com/wp-content/uploads/2019/01/creamy-avocado-dip-recipe-4-scaled.jpg?resize=720%2C720&ssl=1" alt="Guacamole" onclick="showModal(this)">
+            <div class="meal-caption">Fresh guacamole</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.joyfulhealthyeats.com/wp-content/uploads/2020/04/How-to-Make-the-Best-Guacamole-Recipe-web-7.jpg" alt="Guacamole" onclick="showModal(this)">
+            <div class="meal-caption">Guacamole with tortilla chips</div>
+          </div>
+            <div class="meal-preview">
+                <img src="https://afoodcentriclife.com/wp-content/uploads/2023/02/avocado-basil-dip-platter-15.jpg" alt="Guacamole" onclick="showModal(this)">
+                <div class="meal-caption">Guacamole with veggies</div>
+              </div>
+            </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Vegetable Spring Rolls</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Rice paper, carrots, cucumber, bell pepper, lettuce, soy sauce</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Fill rice paper with sliced veggies, roll tightly. Serve with soy sauce.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://myfoodstory.com/wp-content/uploads/2022/06/Veg-Spring-Rolls-3.jpg" alt="Spring Rolls" onclick="showModal(this)">
+            <div class="meal-caption">Crispy spring rolls</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://successrice.com/wp-content/uploads/2021/06/VIETNAMESE-SPRING-ROLLS-1536x864.jpg" alt="Spring Rolls" onclick="showModal(this)">
+            <div class="meal-caption">Vietnamese vegetable spring rolls</div>
+          </div>
+            <div class="meal-preview">
+                <img src="https://thumbs.dreamstime.com/b/chinese-vegetable-spring-rolls-garnished-fresh-salad-lime-wedges-sweet-chilli-sauce-soy-sauce-chinese-vegetable-spring-112381763.jpg" alt="Spring Rolls" onclick="showModal(this)">
+                <div class="meal-caption">New culture, new snack. Chinese vegetable spring rolls.</div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Popcorn</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Popcorn kernels, oil, salt, butter (optional)</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Heat oil, add kernels, cover and shake until popping stops. Season with salt and butter.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://alamocitypopcorn.com/cdn/shop/products/ExtraButtery.jpg?v=1604353627&width=1946" alt="Popcorn" onclick="showModal(this)">
+            <div class="meal-caption">Buttery popcorn</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://culinarylore.com/wp-content/uploads/2013/12/popcorn.jpg" alt="Popcorn" onclick="showModal(this)">
+            <div class="meal-caption">Classic popcorn</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://brooklynfarmgirl.com/wp-content/uploads/2016/10/Rainbow-Poporn-Calls_3.jpg" alt="Popcorn" onclick="showModal(this)">
+            <div class="meal-caption">Rainbow popcorn balls</div>
+          </div>
+            <div class="meal-preview">
+                <img src="https://www.browniebites.net/wp-content/uploads/2014/01/caramel-chocolate-popcorn-moose-munch-recipe-01.jpg" alt="Popcorn" onclick="showModal(this)">
+                <div class="meal-caption">Dark chocolate caramel popcorn</div>
+              </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Crisps</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Potatoes, oil, salt</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Slice potatoes thinly, fry until golden, and season with salt. Add desired spices for extra flavor.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2014/7/23/1406129102210/crisps-011.jpg?width=465&dpr=1&s=none&crop=none" alt="Crisps" onclick="showModal(this)">
+            <div class="meal-caption">Golden crisps</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.justataste.com/wp-content/uploads/2011/05/bbq-potato-chips-recipe-2022-500x375.jpg" alt="Crisps" onclick="showModal(this)">
+            <div class="meal-caption">BBQ potato crisps</div>
+          </div>
+            <div class="meal-preview">
+                <img src="https://data.thefeedfeed.com/recommended/post_1847661.jpg" alt="Crisps" onclick="showModal(this)">
+                <div class="meal-caption">Homemade potato crisps</div>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-card">
+        <div class="recipe-title">Samosa</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Flour, minced meat or chicken, peas, spices</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Make dough, fill with spiced meat or chicken and peas, and deep fry until golden.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://cdn.businessday.ng/2022/02/Beef-samosas-.png" alt="Samosa" onclick="showModal(this)">
+            <div class="meal-caption">Beef samosas</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://utshob.com/uploads/product_images/featured_images/61efedaa7cf90_61efedaa7cf92" alt="Samosa" onclick="showModal(this)">
+            <div class="meal-caption">Chicken samosas</div>
+          </div>
+            <div class="meal-preview">
+                <img src="https://www.veestandoori.co.za/wp-content/uploads/2020/08/Vegetable-Sam.png" alt="Samosa" onclick="showModal(this)">
+                <div class="meal-caption">Vegetable samosas</div>
+              </div>
+    </div>
+    </div>
+    <div>
+        <em>Have a favorite snack recipe? Share it in the <a href="recipe-book.html">Recipe Book</a>!</em>
+    </div>
+    <a href="food-recipes.html" class="back-btn">← Back</a>
+  </div>
+  <!-- Modal for full image -->
+  <div id="imgModal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal(event)">&times;</button>
+      <img id="modalImg" class="modal-img" src="" alt="Full Snack">
+      <div id="modalCaption" class="modal-caption"></div>
+    </div>
+  </div>
+  <script>
+    function showModal(img) {
+      var modal = document.getElementById('imgModal');
+      var modalImg = document.getElementById('modalImg');
+      var modalCaption = document.getElementById('modalCaption');
+      modal.style.display = 'flex';
+      modalImg.src = img.src;
+      modalCaption.textContent = img.nextElementSibling ? img.nextElementSibling.textContent : img.alt;
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(event) {
+      if (event.target.classList.contains('close-btn') || event.target.id === 'imgModal') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Seafood Recipes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      color: #222;
+      background: url('https://metro.com/product_images/uploaded_images/istock-520490716.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: rgba(110, 103, 103, 0.95);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px #33323144;
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+    }
+    .top-x-btn {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      background: #f4ff61;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+    .top-x-btn:hover {
+      background: #d5d815;
+    }
+    h1 {
+      color: #ddd3d3;
+      margin-bottom: 24px;
+      font-size: 2em;
+    }
+    .recipes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-bottom: 24px;
+    }
+    .recipe-card {
+      background: #f1d5d979;
+      border-radius: 12px;
+      box-shadow: 0 1px 8px #ffb34722;
+      padding: 18px;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: left;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .recipe-title {
+      font-size: x-large;
+      color: #faea09e8;
+      margin-bottom: 8px;
+      font-weight: bold;
+      text-align: center;
+      width: 100%;
+    }
+    .recipe-ingredients, .recipe-instructions {
+      margin-bottom: 8px;
+      width: 100%;
+      color:#d0e60df8;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: large;
+    }
+    .meal-previews {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    .meal-preview {
+      flex: 1 1 180px;
+      max-width: 22%;
+      min-width: 160px;
+      text-align: center;
+    }
+    .meal-preview img {
+      width: 100%;
+      max-width: 180px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px #ffb34733;
+      margin-bottom: 4px;
+      height: 120px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .meal-preview img:hover {
+      box-shadow: 0 4px 24px #ffb34766;
+    }
+    .meal-caption {
+      font-size: 0.98em;
+      color: #021731;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+    .back-btn {
+      display: inline-block;
+      margin: 24px auto 0 auto;
+      background: #ffe082;
+      color: #ff6f61;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1em;
+      box-shadow: 0 2px 8px #ffb34733;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .back-btn:hover {
+      background: #ffb347;
+      color: #fff;
+    }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      position: relative;
+      margin: auto;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .modal-img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px #000a;
+      margin-bottom: 12px;
+      background: #fff;
+      padding: 8px;
+    }
+    .modal-caption {
+      color: #fffde7;
+      font-size: 1.1em;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      background: #ff6f61;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 2;
+    }
+    .close-btn:hover {
+      background: #d84315;
+    }
+    @media (max-width: 900px) {
+      .meal-previews { flex-direction: column; gap: 10px; }
+      .meal-preview { max-width: 100%; min-width: 0; }
+      .modal-img { max-width: 98vw; max-height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="top-x-btn" onclick="window.location.href='food-recipes.html'">&times;</button>
+    <h1>Seafood Recipes</h1>
+        <div><em>Click on the images for a bigger view</em></div>
+    <div class="recipes-list">
+      <!-- Grilled Salmon -->
+      <div class="recipe-card">
+        <div class="recipe-title">Grilled Salmon</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Salmon fillets, olive oil, lemon, salt, pepper, dill</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Brush salmon with olive oil, season with salt, pepper, and dill. Grill for 5-7 minutes per side. Squeeze lemon before serving.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.thecookierookie.com/wp-content/uploads/2023/05/featured-grilled-salmon-recipe.jpg" alt="Grilled Salmon 1" onclick="showModal(this)">
+            <div class="meal-caption">Your meal will look like this after</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.cookingclassy.com/wp-content/uploads/2018/05/grilled-lemon-herb-salmon-7.jpg" alt="Grilled Salmon 2" onclick="showModal(this)">
+            <div class="meal-caption">Another serving idea</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.feastingathome.com/wp-content/uploads/2017/06/Grilled-Salmon-Tzatziki-Bowl-104.jpg" alt="Grilled Salmon 3" onclick="showModal(this)">
+            <div class="meal-caption">Try with veggies</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://ux2cms.imgix.net/images/grilled-salmon-and-asparagus-skewers.jpg?w=725&auto=compress,format&blend=https://ux2cms.imgix.net/system-images/gray-overlay-large.png?bs=inherit&balph=0&bm=normal" alt="Grilled Salmon 4" onclick="showModal(this)">
+            <div class="meal-caption">Skewers bring appetite</div>
+          </div>
+        </div>
+      </div>
+      <!-- Garlic Shrimp -->
+      <div class="recipe-card">
+        <div class="recipe-title">Garlic Shrimp</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Shrimp, garlic, butter, parsley, lemon, salt</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Sauté garlic in butter, add shrimp and cook until pink. Sprinkle parsley and squeeze lemon before serving.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://panlasangpinoy.com/wp-content/uploads/2009/03/garlic-butter-shrimp-1.jpg" alt="Garlic Shrimp 1" onclick="showModal(this)">
+            <div class="meal-caption">Your meal will look like this after</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://cookingwithwineblog.com/wp-content/uploads/2021/06/Spicy-Ginger-Garlic-Shrimp-Skewers-Featured-1-500x375.jpg" alt="Garlic Shrimp 3" onclick="showModal(this)">
+            <div class="meal-caption">Shrimp skewers look good</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.budgetbytes.com/wp-content/uploads/2021/06/Lemon-Garlic-Shrimp-and-RIce-plate-close.jpg" alt="Garlic Shrimp 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with rice</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://img.sndimg.com/food/image/upload/q_92,fl_progressive,w_1200,c_scale/v1/img/recipes/42/45/54/pic04FLiF.jpg" alt="Garlic Shrimp 3" onclick="showModal(this)">
+            <div class="meal-caption">Add fresh herbs</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://whatsgabycooking.com/wp-content/uploads/2023/04/WGC-__-Hawaiian-Garlic-Shrimp-2-1200x800-1.jpg" alt="Garlic Shrimp 4" onclick="showModal(this)">
+            <div class="meal-caption">Great appetizer</div>
+          </div>
+        </div>
+      </div>
+      <!-- Fish Tacos -->
+      <div class="recipe-card">
+        <div class="recipe-title">Fish Tacos</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> White fish fillets, taco shells, cabbage, lime, cilantro, sour cream, chili powder, salt</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Season fish with chili powder and salt, grill or pan-fry until cooked. Fill taco shells with fish, cabbage, cilantro, and a squeeze of lime. Top with sour cream.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.seriouseats.com/thmb/y3Qf-ciu-nzLgYeJzK4xWoabibQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/SEA-M7011302_crunchy_fish_tacos6556-JenCausey-f8285ed3d8674b25bf16d027034fc41b.jpg" alt="Fish Tacos 1" onclick="showModal(this)">
+            <div class="meal-caption">Your meal will look like this after</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://marleyspoon.com/media/recipes/78467/main_photos/large/crispy_fish_tacos-0e4071bf4ac3a3b8d1104a4c64108449.jpeg" alt="Fish Tacos 2" onclick="showModal(this)">
+            <div class="meal-caption">Try with salsa</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.dinneratthezoo.com/wp-content/uploads/2016/06/fish-tacos-5-480x270.jpg" alt="Fish Tacos 3" onclick="showModal(this)">
+            <div class="meal-caption">Add avocado</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://food.theplainjane.com/wp-content/uploads/2016/03/el-taco-riendo-ensenada-plain-fish-taco.jpg" alt="Fish Tacos 3" onclick="showModal(this)">
+            <div class="meal-caption">Plain fish tacos are also delish.</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.foodandwine.com/thmb/8GTutX3bt_s__nurCmEP_zis9cM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Beer-Battered-Fish-Tacos-FT-RECIPE0522-ce3d88a65d68413784cf524dc5784115.jpg" alt="Fish Tacos 4" onclick="showModal(this)">
+            <div class="meal-caption">Perfect for lunch</div>
+          </div>
+        </div>
+      </div>
+      <!-- Seafood Paella -->
+      <div class="recipe-card">
+        <div class="recipe-title">Seafood Paella</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Rice, shrimp, mussels, squid, bell pepper, tomato, onion, garlic, saffron, olive oil, chicken broth</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Sauté onion, garlic, and bell pepper in olive oil. Add rice and saffron, stir. Add broth and tomatoes, simmer. Add seafood and cook until rice is tender and seafood is done.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://images.getrecipekit.com/20240822143125-paella-recipe.png?aspect_ratio=16:9&quality=90&" alt="Seafood Paella 1" onclick="showModal(this)">
+            <div class="meal-caption">Your meal will look like this after</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://png.pngtree.com/thumb_back/fh260/background/20250423/pngtree-traditional-spanish-seafood-paella-with-shrimp-mussels-and-fresh-herbs-served-image_17203062.jpg" alt="Seafood Paella 2" onclick="showModal(this)">
+            <div class="meal-caption">Colorful presentation</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://i.ytimg.com/vi/fR2cNFQXClY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAwNImJnE2AMzmENrtTtf0chdIAEw" alt="Seafood Paella 3" onclick="showModal(this)">
+            <div class="meal-caption">Add lemon wedges</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://images.food52.com/fTHhYClazMTFH-qCOAyuGkLPacU=/c0551e15-f2ab-42e3-a45d-1dbc3a377793--2019-0423_perez-family-paella_3x2_julia-gartland_0988.jpeg" alt="Seafood Paella 4" onclick="showModal(this)">
+            <div class="meal-caption">Serve family style</div>
+          </div>
+        </div>
+      </div>
+      <!-- Crab Cakes -->
+      <div class="recipe-card">
+        <div class="recipe-title">Crab Cakes</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Crab meat, breadcrumbs, egg, mayonnaise, Dijon mustard, parsley, lemon juice, salt, pepper</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Mix crab meat with breadcrumbs, egg, mayo, mustard, parsley, lemon juice, salt, and pepper. Form into cakes and pan-fry until golden brown.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://oatseveryday.com/wp-content/uploads/2017/06/Crab_Cakes_With_Lemon_Aioli_recipe.jpg" alt="Crab Cakes 1" onclick="showModal(this)">
+            <div class="meal-caption">Your meal will look like this after</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://jacosbayfrontbarandgrille.restaurantengine.com/files/2015/05/Crab_Cake_Salad-525x320.jpg" alt="Crab Cakes 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with salad</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://mysaucerecipes.com/wp-content/uploads/2022/08/Crab-Cake-Sauce-5-1024x684.jpg" alt="Crab Cakes 3" onclick="showModal(this)">
+            <div class="meal-caption">Add dipping sauce</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://anolon.com/cdn/shop/articles/c92b8f570f76490d7d4c9818c9c350ad_1024x1024.jpg?v=1573253097" alt="Crab Cakes 4" onclick="showModal(this)">
+            <div class="meal-caption">Great for parties</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Fish Balls</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Fish fillets, breadcrumbs, egg, garlic, parsley, salt, pepper</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Blend fish fillets with breadcrumbs, egg, garlic, parsley, salt, and pepper. Form into balls and deep-fry until golden brown.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://i.ytimg.com/vi/2Fi2tZiq0T0/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLC0IWiDcB6EmKMKTMF_J0T2f2emsg" alt="Fish Balls 1" onclick="showModal(this)">
+            <div class="meal-caption">Your meal will look like this after</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.deliciousmagazine.co.uk/wp-content/uploads/2018/07/883412-1-eng-GB_thai-prawn-balls-623x500.jpg" alt="Fish Balls 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with salad</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://img.sndimg.com/food/image/upload/v1/img/recipes/34/37/12/picY2InP4.jpg" alt="Fish Balls 3" onclick="showModal(this)">
+            <div class="meal-caption">Spicy fish balls</div>
+          </div>
+        </div>
+      </div>      <!-- Steamed Mussels -->
+      <div class="recipe-card">
+        <div class="recipe-title">Steamed Mussels</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Mussels, white wine, garlic, parsley, butter, lemon</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Sauté garlic in butter, add mussels and white wine. Cover and steam until mussels open. Sprinkle with parsley and serve with lemon.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.healthyseasonalrecipes.com/wp-content/uploads/2023/01/simple-steamed-mussels-with-garlic-sq-041-640x480.jpg" alt="Steamed Mussels 1" onclick="showModal(this)">
+            <div class="meal-caption">Your meal will look like this after</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://crowdcow-images.imgix.net/https%3A%2F%2Fcrowdcow-images.imgix.net%2Fhttps%253A%252F%252Fimages.ctfassets.net%252Fjigso8mmhmq2%252F5MbAROxJG2Ghui9cfxWIff%252F30d939598b0c25af339178a80298d24f%252FMussels2-edited.jpg%3Fixlib%3Drails-2.1.4%26fit%3Dcrop%26auto%3Dcompress%26w%3D1900%26cs%3Dsrgb%26s%3D559eb284dcac138acec8c3c114dd682c?ixlib=rails-2.1.4&alt=Steamed%20Mussels%20with%20White%20Wine%20and%20Garlic&auto=compress%2Cformat&cs=srgb&w=500&fit=min&s=bc446ef7ffff2ce65015be91480cbc68" alt="Steamed Mussels 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with bread</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://popmenucloud.com/cdn-cgi/image/width%3D1200%2Cheight%3D1200%2Cfit%3Dscale-down%2Cformat%3Dauto%2Cquality%3D60/qtijgfvp/e3c14563-1606-425a-a08e-f960c6d7c661.JPG" alt="Steamed Mussels 3" onclick="showModal(this)">
+            <div class="meal-caption">Add fresh herbs</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://therecipecritic.com/wp-content/uploads/2021/11/howtocookmussels-500x375.jpg" alt="Steamed Mussels 4" onclick="showModal(this)">
+            <div class="meal-caption">Perfect starter</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <em>Have a favorite seafood recipe? Share it in the <a href="recipe-book.html">Recipe Book</a>!</em>
+    </div>
+    <a href="food-recipes.html" class="back-btn">← Back</a>
+  </div>
+  <!-- Modal for full image -->
+  <div id="imgModal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal(event)">&times;</button>
+      <img id="modalImg" class="modal-img" src="" alt="Full Meal">
+      <div id="modalCaption" class="modal-caption"></div>
+    </div>
+  </div>
+  <script>
+    function showModal(img) {
+      var modal = document.getElementById('imgModal');
+      var modalImg = document.getElementById('modalImg');
+      var modalCaption = document.getElementById('modalCaption');
+      modal.style.display = 'flex';
+      modalImg.src = img.src;
+      modalCaption.textContent = img.nextElementSibling ? img.nextElementSibling.textContent : img.alt;
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(event) {
+      // Only close if clicking the X or outside the modal-content
+      if (event.target.classList.contains('close-btn') || event.target.id === 'imgModal') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+    // Optional: close modal with ESC key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>

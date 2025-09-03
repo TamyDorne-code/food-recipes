@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cooking Techniques Tips</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; 
+    background: #f8c6c6; 
+    margin: 0; 
+    color: #222; 
+}
+    .container { max-width: 650px; 
+        margin: 40px auto; 
+        background: #ecb4b4; 
+        border-radius: 18px; 
+        box-shadow: 0 4px 24px #ffb34744; 
+        padding: 32px 24px; 
+        text-align: center; 
+    }
+    h1 { color: #e23727; 
+        margin-bottom: 24px; 
+        font-size: 2em; 
+    }
+    .tech-category-list { display: flex; 
+        flex-direction: column; 
+        gap: 28px; align-items: 
+        center; margin-bottom: 32px; 
+    }
+    .tech-category-box { background: #f7d2f0; 
+        border-radius: 14px; 
+        box-shadow: 0 2px 12px #ffb34733; 
+        width: 96%; 
+        max-width: 500px; 
+        padding: 24px 18px; 
+        text-align: left; 
+        margin: 0 auto; 
+    }
+    .tech-category-title { font-size: 1.18em; 
+        color: #ff6f61; 
+        font-weight: bold; 
+        margin-bottom: 8px; 
+    }
+    .tech-category-desc { font-size: 1.05em; 
+        color: #526885; 
+        margin-bottom: 10px; 
+    }
+    ul { text-align: left; 
+        font-size: 1.08em; 
+        color: #526885; 
+        padding-left: 18px; 
+        margin-bottom: 0; 
+    }
+    .back-btn { display: block; 
+        margin: 32px auto 0 auto; 
+        background: #ff8282; 
+        color: #300603; 
+        border: none; 
+        border-radius: 8px; 
+        padding: 10px 22px; 
+        font-weight: bold; 
+        cursor: pointer; 
+        font-size: 1em; 
+        box-shadow: 0 2px 8px #ffb34733; 
+        transition: background 0.2s; 
+        text-decoration: none; 
+        text-align: center; 
+        width: fit-content; 
+    }
+    .back-btn:hover { background: #ff4747; 
+        color: #e9aaaa; 
+    }
+    p {
+        color: #800000;
+        margin: 12px 0;
+        line-height: 1.6em;
+        font-family:'Courier New', Courier, monospace;
+        font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+        <button class="top-x-btn" onclick="window.location.href='tips-tricks.html'" 
+  style="position:fixed;top:18px;right:24px;background:#350a0a;color:#d49b9b;border:none;border-radius:50%;width:38px;height:38px;font-size:1.8em;font-weight:bold;cursor:pointer;box-shadow:0 2px 8px #0005;display:flex;align-items:center;justify-content:center;transition:background 0.2s;z-index:100;">&times;</button>  
+    <h1>Cooking Techniques Tips</h1>
+    <p>Master your kitchen skills with these cooking technique tips, organized by category:</p>
+    <div class="tech-category-list">
+      <div class="tech-category-box">
+        <div class="tech-category-title">Meat & Protein Techniques</div>
+        <div class="tech-category-desc">Get the best results when cooking meat and proteins.</div>
+        <ul>
+          <li>Let meat rest after cooking for juicier results.</li>
+          <li>Marinate proteins for extra flavor and tenderness.</li>
+          <li>Use a meat thermometer for perfect doneness.</li>
+        </ul>
+      </div>
+      <div class="tech-category-box">
+        <div class="tech-category-title">Pan & Heat Control</div>
+        <div class="tech-category-desc">Tips for using pans and controlling heat.</div>
+        <ul>
+          <li>Don’t overcrowd the pan for even browning.</li>
+          <li>Preheat pans before adding ingredients.</li>
+          <li>Use the right pan for the job (nonstick, cast iron, etc.).</li>
+        </ul>
+      </div>
+      <div class="tech-category-box">
+        <div class="tech-category-title">Sauces & Simmering</div>
+        <div class="tech-category-desc">Make sauces and simmer dishes like a pro.</div>
+        <ul>
+          <li>Simmer sauces to concentrate flavor.</li>
+          <li>Deglaze pans with wine or broth for rich sauces.</li>
+          <li>Stir gently to avoid breaking delicate ingredients.</li>
+        </ul>
+      </div>
+      <div class="tech-category-box">
+        <div class="tech-category-title">Baking Techniques</div>
+        <div class="tech-category-desc">Tips for successful baking.</div>
+        <ul>
+          <li>Preheat your oven for even baking.</li>
+          <li>Use parchment paper to prevent sticking.</li>
+          <li>Rotate pans halfway through baking for even results.</li>
+        </ul>
+      </div>
+    </div>
+    <a href="tips-tricks.html" class="back-btn">← Back</a>
+  </div>
+</body>
+</html>

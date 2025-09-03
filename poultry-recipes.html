@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Poultry Recipes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      color: #0ce60c;
+      background: url('https://static01.nyt.com/images/2021/02/28/multimedia/28sheetpan-chicken-gojuchang/28sheetpan-chicken-gojuchang-jumbo-v2.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: rgba(75, 37, 2, 0.74);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px #ffb34744;
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+    }
+    .top-x-btn {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      background: #ff6f61;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+    .top-x-btn:hover {
+      background: #d84315;
+    }
+    h1 { 
+      color: #fdaf06; 
+      margin-bottom: 24px; 
+      font-size: 2em; 
+    }
+    .recipes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-bottom: 24px;
+    }
+    .recipe-card {
+      background: #b990377e;
+      border-radius: 12px;
+      box-shadow: 0 1px 8px #ffb34722;
+      padding: 18px;
+      margin-bottom: 0;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .recipe-title { font-size: x-large; color: #fffc61; margin-bottom: 8px; font-weight: bold; text-align: center; width: 100%; }
+    .recipe-ingredients, .recipe-instructions { 
+      margin-bottom: 8px; 
+      width: 100%;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: large;
+      color: #f0d50f;
+    }
+    .meal-previews {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    .meal-preview {
+      flex: 1 1 180px;
+      max-width: 22%;
+      min-width: 160px;
+      text-align: center;
+    }
+    .meal-preview img {
+      width: 100%;
+      max-width: 180px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px #ffb34733;
+      margin-bottom: 4px;
+      height: 120px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .meal-preview img:hover {
+      box-shadow: 0 4px 24px #ffb34766;
+    }
+    .meal-caption {
+      font-size: 1.09em;
+      color: #010f22;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+    .back-btn { display: inline-block; margin: 24px auto 0 auto; background: #ffe082; color: #ff6f61; border: none; border-radius: 8px; padding: 10px 22px; font-weight: bold; cursor: pointer; font-size: 1em; box-shadow: 0 2px 8px #ffb34733; transition: background 0.2s; text-decoration: none; }
+    .back-btn:hover { background: #ffb347; color: #fff; }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      position: relative;
+      margin: auto;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .modal-img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px #000a;
+      margin-bottom: 12px;
+      background: #fff;
+      padding: 8px;
+    }
+    .modal-caption {
+      color: #fffde7;
+      font-size: 1.1em;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      background: #ff6f61;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 2;
+    }
+    .close-btn:hover {
+      background: #d84315;
+    }
+    @media (max-width: 900px) {
+      .meal-previews { flex-direction: column; gap: 10px; }
+      .meal-preview { max-width: 100%; min-width: 0; }
+      .modal-img { max-width: 98vw; max-height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="top-x-btn" onclick="window.location.href='food-recipes.html'">&times;</button>
+    <h1>Poultry Recipes</h1>
+        <div><em>Click on the images for a bigger view</em></div>
+    <div class="recipes-list">
+      <div class="recipe-card">
+        <div class="recipe-title">Roast Chicken</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Whole chicken, olive oil, garlic, lemon, rosemary, salt, pepper</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Rub chicken with oil, garlic, lemon, rosemary, salt, and pepper. Roast at 190°C for 1 hour 20 minutes.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://images.summitmedia-digital.com/spotph/images/2018/08/30/top-10-chicken-SNR.jpg" alt="Roast Chicken 1" onclick="showModal(this)">
+            <div class="meal-caption">Golden roast chicken</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://img.sndimg.com/food/image/upload/v1/img/recipes/12/70/9/S4JwWNleT1KCtCgo5d6t_CHICKEN3.jpg" alt="Roast Chicken 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with lemon</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://ichef.bbc.co.uk/ace/standard/1600/food/recipes/one-pan_chicken_68593_16x9.jpg.webp" alt="Roast Chicken 3" onclick="showModal(this)">
+            <div class="meal-caption">Perfect for dinner</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://my.diabetescarecommunity.ca/wp-content/uploads/2024/04/194-scaled.jpg" alt="Roast Chicken 4" onclick="showModal(this)">
+            <div class="meal-caption">Add fresh herbs</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Chicken Curry</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Chicken breast, curry powder, coconut milk, onion, garlic, ginger, oil, salt</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Sauté onion, garlic, and ginger. Add chicken and brown. Add curry powder and coconut milk, simmer until chicken is cooked. Serve with rice.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.cabothealth.com.au/wp-content/uploads/2015/11/Cabot-Health-Creamy-Chicken-Curry.jpg" alt="Chicken Curry 1" onclick="showModal(this)">
+            <div class="meal-caption">Creamy chicken curry</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.rachelphipps.com/wp-content/uploads/2024/09/Creamy-Butter-Chicken-1024x683.jpg" alt="Chicken Curry 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with rice</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://platetopalateblog.com/wp-content/uploads/2020/12/20201122_124340-480x270.jpg" alt="Chicken Curry 3" onclick="showModal(this)">
+            <div class="meal-caption">Add fresh cilantro / coriander</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://foodvortexa.com/wp-content/uploads/2024/11/maxresdefault-2.jpg" alt="Chicken Curry 4" onclick="showModal(this)">
+            <div class="meal-caption">Spicy and flavorful</div>
+          </div>
+        </div>
+      </div>
+            <!-- Duck -->
+      <div class="recipe-card">
+        <div class="recipe-title">Roast Duck</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Duck, salt, pepper, orange, thyme, honey</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Season duck, stuff with orange and thyme, roast at 180°C for 1 hour. Glaze with honey before serving.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.thespruceeats.com/thmb/FvcELLAznewWQb6PMoeHsV688Mk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/cantonese-roast-duck-694866-hero-01-78e1e92c2e4948a4b98ba23c0701d274.jpg" alt="Roast Duck 1" onclick="showModal(this)">
+            <div class="meal-caption">Crispy roast duck</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.foodandwine.com/thmb/OrjWhtb7G2WAxlNPdPnNv6eUMwE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/roast-duck-citrus-sauce-FT-RECIPE1024-c826af04741b425199f0a4e5ff64d68d.jpeg" alt="Roast Duck 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with orange</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU2Rw3fa5PJxssa2gchLxBfc_5ODb4ldhW-g&s" alt="Roast Duck 3" onclick="showModal(this)">
+            <div class="meal-caption">Perfect for celebrations</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhoJdu-iffB7z2l_es4xcywYZdlsvuZrFY5Q&s" alt="Roast Duck 4" onclick="showModal(this)">
+            <div class="meal-caption">Add fruit glaze</div>
+          </div>
+        </div>
+      </div>
+            <!-- Goose -->
+      <div class="recipe-card">
+        <div class="recipe-title">Roast Goose</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Goose, salt, pepper, apple, onion, thyme</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Season goose, stuff with apple and onion, roast at 180°C for 2 hours. Rest before carving.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://rickrodgers.com/wp-content/uploads/2024/08/Roast-Goose-for-Christmas-1200px-500x375.jpg" alt="Roast Turkey 1" onclick="showModal(this)">
+            <div class="meal-caption">Crispy roast goose</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://mojo.generalmills.com/api/public/content/khdMTxmMS02lRpHPJKBmbA_webp_base.webp?v=f9f78fdb&t=191ddcab8d1c415fa10fa00a14351227" alt="Roast Turkey 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with stuffing</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.saltscapes.com/media/zoo/images/roast-goose-with-fruit-nut0stuffing_5e76b655132ea417d7751fc60bf1a1f5.jpg" alt="Roast Turkey 3" onclick="showModal(this)">
+            <div class="meal-caption">Fruits add taste</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://pbs.twimg.com/media/B4lyAUFCUAAN7cv.jpg" alt="Roast Turkey 4" onclick="showModal(this)">
+            <div class="meal-caption">Add cranberry sauce</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Grilled Turkey Breast</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Turkey breast, olive oil, garlic, paprika, salt, pepper</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Brush turkey breast with oil, garlic, paprika, salt, and pepper. Grill until cooked through and juicy.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://dxp-dh-production.s3.amazonaws.com/5b04620235ec91ae73e93f7e/assets/65527694bd62f60013a195cf/maplebbqturkeybreastsimage.jpg" alt="Grilled Turkey Breast 1" onclick="showModal(this)">
+            <div class="meal-caption">Juicy grilled turkey</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://media.istockphoto.com/id/622185412/photo/fried-chicken-fillets-and-vegetables-on-wooden-background.jpg?s=612x612&w=0&k=20&c=77pMPB8OpRfV2aQnS9zw3EwUAN3dy45p8tRpPbI0ucU=" alt="Grilled Turkey Breast 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with veggies</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.butterball.com/sites/butterball/files/2023-01/Butterball-Grilled-Turkey-Breast-Cranberry-Jalapeno-Hot-Sauce_horiz.jpg" alt="Grilled Turkey Breast 3" onclick="showModal(this)">
+            <div class="meal-caption">Perfect for summer</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.kitchenkonfidence.com/wp-content/uploads/2020/11/Herb-Roasted-Turkey-Breast-4.jpg" alt="Grilled Turkey Breast 4" onclick="showModal(this)">
+            <div class="meal-caption">Add fresh herbs</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Duck à l'Orange</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Duck breast, orange juice, honey, soy sauce, garlic, salt, pepper</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Sear duck breast, make sauce with orange juice, honey, soy sauce, and garlic. Serve duck with sauce.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://bakeitwithlove.com/wp-content/uploads/2023/11/duck-breast-cooked-h.jpg.webp" alt="Duck à l'Orange 1" onclick="showModal(this)">
+            <div class="meal-caption">Classic duck à l'orange</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://sweetcsdesigns.com/wp-content/uploads/2022/11/crispy-seared-duck-breast-recipe-picture.jpg" alt="Duck à l'Orange 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with orange sauce</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://tastyduck.com/wp-content/uploads/2023/08/Pan-Seared-Duck-Breast-with-Orange-Glaze-1.png" alt="Duck à l'Orange 3" onclick="showModal(this)">
+            <div class="meal-caption">Perfect for holidays</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://s3.us-east-1.amazonaws.com/assets.mapleleaffarms.com/content/_368x230_crop_center_85_none/Duck-a%CC%80-l%E2%80%99Orange.jpg" alt="Duck à l'Orange 4" onclick="showModal(this)">
+            <div class="meal-caption">Add fresh orange slices</div>
+          </div>
+          </div>
+          </div>
+                <div class="recipe-card">
+        <div class="recipe-title">Chicken Alfredo</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Chicken breast, fettuccine pasta, cream, parmesan, garlic, butter, parsley</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Cook pasta. Sauté chicken and garlic in butter. Add cream and parmesan, simmer. Toss with pasta and parsley.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://jenniferbanz.com/wp-content/uploads/2020/02/keto-chicken-alfredo-recipe-image-2.jpg" alt="Chicken Alfredo 1" onclick="showModal(this)">
+            <div class="meal-caption">Creamy chicken alfredo</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://i1.wp.com/www.freshtohome.com/blog/wp-content/uploads/2024/07/Screenshot-2024-07-16-163409.png?fit=574%2C319&ssl=1" alt="Chicken Alfredo 1" onclick="showModal(this)">
+            <div class="meal-caption">Served with pasta</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://themom100.com/wp-content/uploads/2023/11/chicken-alfredo-196-500x375.jpg" alt="Chicken Alfredo 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with parsley</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Buffalo Wings</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Chicken wings, hot sauce, butter, garlic powder, salt, pepper</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Bake or fry wings until crispy. Toss with melted butter and hot sauce. Serve with celery and blue cheese dip.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://www.carnaldish.com/wp-content/uploads/2015/09/garlicgingerwings1.jpg" alt="Buffalo Wings 1" onclick="showModal(this)">
+            <div class="meal-caption">Spicy buffalo wings</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://forthewing.com/wp-content/uploads/2025/03/The-Dirty-Buffalo-Hot-Honey-Wing-Sauce-Wings.png" alt="Buffalo Wings 2" onclick="showModal(this)">
+            <div class="meal-caption">Serve with dip</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Chicken Caesar Salad</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Chicken breast, romaine lettuce, croutons, parmesan, Caesar dressing</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Grill chicken, slice. Toss lettuce with dressing, top with chicken, croutons, and parmesan.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://images.getrecipekit.com/v1624461856_s3upw7kgcnoa6kutixik.jpg?aspect_ratio=16:9&quality=90&" alt="Chicken Caesar Salad 1" onclick="showModal(this)">
+            <div class="meal-caption">Classic Caesar salad</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://www.foodnetwork.com/content/dam/images/food/fullset/2018/5/1/0/FNK_Chicken-Caesar-Crouton-Cups-H_s4x3.jpg" alt="Chicken Caesar Salad 2" onclick="showModal(this)">
+            <div class="meal-caption">Make crouton cups</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Stuffed Quail</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Quail, bread crumbs, herbs, garlic, butter, salt, pepper</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Stuff quail with seasoned bread crumbs and herbs. Roast at 200°C for 25 minutes.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://img.texasmonthly.com/2024/09/quail-vittles.jpg?auto=compress&crop=faces&fit=fit&fm=jpg&h=0&ixlib=php-3.3.1&q=45&w=1250" alt="Stuffed Quail 1" onclick="showModal(this)">
+            <div class="meal-caption">Elegant stuffed quail</div>
+          </div>
+          <div class="meal-preview">
+            <img src="https://marxfood.com/wp-content/uploads/chorizostuffedquail-feature.jpg" alt="Stuffed Quail 2" onclick="showModal(this)">
+            <div class="meal-caption">Chorizo stuffed quail</div>
+          </div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="recipe-title">Chicken Pot Pie</div>
+        <div class="recipe-ingredients"><b>Ingredients:</b> Chicken breast, mixed vegetables, pie crust, cream, butter, flour, salt, pepper</div>
+        <div class="recipe-instructions"><b>Instructions:</b> Cook chicken and vegetables in creamy sauce. Fill pie crust, bake at 200°C for 30 minutes.</div>
+        <div class="meal-previews">
+          <div class="meal-preview">
+            <img src="https://littlespoonfarm.com/wp-content/uploads/2024/07/chicken-pot-pie-recipe.jpg" alt="Chicken Pot Pie 1" onclick="showModal(this)">
+            <div class="meal-caption">Comforting chicken pot pie</div>
+          </div>
+           <div class="meal-preview">
+            <img src="https://makeittofriday.com/wp-content/uploads/2019/03/DSC_4431-735x487.jpg" alt="Chicken Pot Pie 1" onclick="showModal(this)">
+            <div class="meal-caption">Mini chicken pot pies</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <em>Have a favorite poultry recipe? Share it in the <a href="recipe-book.html">Recipe Book</a>!</em>
+      </div>
+    <a href="food-recipes.html" class="back-btn">← Back</a>
+  <!-- Modal for full image -->
+  <div id="imgModal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal(event)">&times;</button>
+      <img id="modalImg" class="modal-img" src="" alt="Full Meal">
+      <div id="modalCaption" class="modal-caption"></div>
+    </div>
+  </div>
+  <script>
+    function showModal(img) {
+      var modal = document.getElementById('imgModal');
+      var modalImg = document.getElementById('modalImg');
+      var modalCaption = document.getElementById('modalCaption');
+      modal.style.display = 'flex';
+      modalImg.src = img.src;
+      modalCaption.textContent = img.nextElementSibling ? img.nextElementSibling.textContent : img.alt;
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(event) {
+      if (event.target.classList.contains('close-btn') || event.target.id === 'imgModal') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('imgModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>
